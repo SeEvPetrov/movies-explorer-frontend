@@ -1,0 +1,59 @@
+.header__theme_black {
+  background: #202020;
+  padding-bottom: 80px;
+}
+
+.header__theme_blue {
+  background-color: #073042;
+}
+
+.header__container {
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  padding: 0 70px;
+  max-width: 1280px;
+}
+
+.header__container_movies {
+  justify-content: start;
+}
+
+.header__container_landing {
+  justify-content: space-between;
+}
+
+.header__logo {
+  display: inline-block;
+  margin: 18px 0;
+  width: 40px;
+  height: 38px;
+  background: url(../../images/logo.svg) no-repeat;
+  transition: opacity 0.3s linear;
+}
+
+.header__logo:hover {
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 768px) {
+  .header__container {
+    padding: 0 30px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .navigate__button-open {
+      display: block;
+    }
+
+    .header__container_movie {
+      justify-content: space-between;
+    }
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .header__container {
+    padding: 0 14px;
+  }
+}
