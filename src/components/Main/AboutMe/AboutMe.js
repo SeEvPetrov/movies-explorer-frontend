@@ -3,9 +3,9 @@ import student from "../../../images/student.jpg";
 
 function AboutMe() {
   return (
-    <section className="student" id="student">
-      <div className="student__container">
-        <h2 className="student__title">Студент</h2>
+    <section className="info" id="student">
+      <div className="info__container">
+        <h2 className="info__title">Студент</h2>
         <div className="student__block">
           <div className="student__info">
             <h3 className="student__name">Сергей</h3>

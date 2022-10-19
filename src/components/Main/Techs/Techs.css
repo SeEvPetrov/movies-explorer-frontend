@@ -45,11 +45,6 @@
 }
 
 @media screen and (max-width: 820px) {
-  .techs__container {
-    padding: 90px 0;
-    width: calc(100% - 50px * 2);
-  }
-
   .techs__heading-title {
     padding: 80px 0 22px;
   }
@@ -74,15 +69,10 @@
   }
 }
 
-@media screen and (max-width: 610px) {
+@media screen and (max-width: 690px) {
   .techs__list {
     flex-wrap: wrap;
     margin-top: 50px;
-  }
-
-  .techs__container {
-    padding: 70px 0;
-    width: calc(100% - 14px * 2);
   }
 
   .techs__title {
@@ -105,13 +95,10 @@
 }
 
 @media screen and (max-width: 320px) {
-  .techs {
-    background-color: #202020;
-  }
-
   .techs__list {
     justify-content: start;
+    align-items: center;
     margin: 50px auto 0;
-    width: calc(100% - 55px * 2);
+    width: calc(100% - 53px * 2);
   }
 }

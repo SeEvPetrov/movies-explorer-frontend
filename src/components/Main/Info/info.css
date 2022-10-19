@@ -40,4 +40,10 @@
     font-size: 18px;
     line-height: 22px;
   }
+  .info__color_grey {
+    background-color: #202020;
+  }
+  .info__title_color_black {
+    border-bottom: 1px solid #000000;
+  }
 }
