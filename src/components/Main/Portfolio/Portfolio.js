@@ -39,38 +39,6 @@ function Portfolio() {
               <p className="portfolio__link-arrow">↗</p>
             </a>
           </li>
-          {/* <li className="portfolio__item">
-            <a
-              className="portfolio__website"
-              href="https://goldlexx.github.io/russian-travel/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Адаптивный сайт
-            </a>
-            <a
-              className="portfolio__arrow"
-              href="https://goldlexx.github.io/russian-travel/"
-              target="_blank"
-              rel="noreferrer"
-            />
-          </li>
-          <li className="portfolio__item">
-            <a
-              className="portfolio__website"
-              href="https://место.site/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Одностраничное приложение
-            </a>
-            <a
-              className="portfolio__arrow"
-              href="https://место.site/"
-              target="_blank"
-              rel="noreferrer"
-            />
-          </li> */}
         </ul>
       </div>
     </section>
