@@ -26,7 +26,7 @@
 .portfolio__item {
   padding-top: 20px;
   padding-bottom: 19px;
-  border-bottom: 1px solid #424242;
+  border-bottom: 1px solid #8b8b8b;
 }
 
 .portfolio__item:first-of-type {
