@@ -2,9 +2,9 @@ import './Techs.css';
 
 function Techs() {
   return (
-    <section className='techs' id='techs'>
-      <div className='techs__container'>
-        <h2 className='techs__title'>Технологии</h2>
+    <section className='info info__color_grey' id='techs'>
+      <div className='info__container'>
+        <h2 className='info__title'>Технологии</h2>
         <h3 className='techs__heading-title'>7 технологий</h3>
         <p className='techs__text'>
           На курсе веб-разработки мы освоили технологии, которые применили в

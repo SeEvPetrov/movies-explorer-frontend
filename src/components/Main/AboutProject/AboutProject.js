@@ -1,10 +1,11 @@
-import '../Main.css';
+import '../Info/info.css';
 import './AboutProject.css';
 
 
 function AboutProject() {
   return (
     <section className='info' id='about'>
+      <div className="info__container">
         <h2 className='info__title'>О проекте</h2>
         <ul className='about__list'>
           <li className='about__item'>
@@ -40,6 +41,7 @@ function AboutProject() {
             <p className='about__graph-technology'>Front-end</p>
           </li>
         </ul>
+      </div>
     </section>
   );
 }

@@ -31,6 +31,9 @@ function Main({ loggedIn }) {
         <Promo />
         <NavTab />
         <AboutProject />
+        <Techs />
+        <AboutMe />
+        <Portfolio />
       </main>
       <Footer />
     </>
