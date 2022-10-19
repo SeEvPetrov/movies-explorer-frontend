@@ -21,9 +21,14 @@ function BurgerMenu({ isOpen, isClose }) {
             Сохраненные фильмы
           </Link>
         </nav>
-        <Link to='/profile' className='burger-menu__btn-profile'>
-          Аккаунт
-        </Link>
+        <div className="burger-menu__btn-profile">
+          <Link to="/profile" className="navigate__account-link">
+            <p className="navigate__account_text">Аккаунт</p>
+          </Link>
+          <Link to="/profile">
+            <button className="navigate__account_img"></button>
+          </Link>
+        </div>
       </div>
     </div>
   );

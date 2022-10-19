@@ -1,6 +1,6 @@
 .header__theme_black {
   background: #202020;
-  padding-bottom: 80px;
+  padding-bottom: 70px;
 }
 
 .header__theme_blue {
@@ -16,7 +16,7 @@
 }
 
 .header__container_movies {
-  justify-content: start;
+  justify-content: space-between;
 }
 
 .header__container_landing {

@@ -2,13 +2,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
+  width: 60%;
 }
 
 .navigate__list {
   display: flex;
   list-style-type: none;
-  margin: 0 0 0 44px;
+  margin: 0;
   padding: 0;
 }
 
@@ -36,16 +36,33 @@
 }
 
 .navigate__account {
-  display: inline-block;
-  border-radius: 20px;
-  padding: 8px 20px;
+  display: flex;
+  align-items: center;
+  padding: 7px 0;
   font-weight: 500;
   font-size: 14px;
   line-height: 114%;
+}
+.navigate__account-link {
   text-decoration: none;
+}
+
+.navigate__account_text {
+  margin-right: 13px;
   color: #fff;
-  background: #313131;
+  text-decoration: none;
   transition: opacity 0.3s linear;
+}
+
+.navigate__account_img {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 6px;
+  background-color: #313131;
+  background-image: url(../../../images/account.svg);
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .navigate__movies::after {
@@ -61,10 +78,10 @@
 
 .navigate__movies:hover::after,
 .navigate__movies:focus::after {
-	width: 100%; /* устанавливаем значение 100% чтобы ссылка подчёркивалась полностью */
+	width: 100%;
 }
 
-.navigate__account:hover {
+.navigate__account_text:hover {
   opacity: 0.8;
 }
 
@@ -78,10 +95,6 @@
   color: inherit;
   background-image: url(../../../images/burger.svg);
   background-color: transparent;
-}
-
-.active {
-  color: #3ddc84;
 }
 
 @media screen and (max-width: 768px) {
