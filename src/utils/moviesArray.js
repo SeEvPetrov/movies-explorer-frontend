@@ -33,6 +33,8 @@ const moviesArray = [
     hours: 1,
     minutes: 42,
     save: false,
+    image:
+      "http://zabavniks.com/wp-content/uploads/Grust_toska_28_30134544.jpg",
   },
   {
     id: 5,

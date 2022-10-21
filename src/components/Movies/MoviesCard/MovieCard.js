@@ -1,6 +1,7 @@
 import './MovieCard.css';
 
 function MovieCard({name, hours, minutes, save, image}) {
+    return (
     <li className="movie-card">
         <img src={image} alt={name} className="movie-card__img"/>
         <div className="movie-card__description">
@@ -14,6 +15,7 @@ function MovieCard({name, hours, minutes, save, image}) {
         {hours}ч{minutes}м
         </p>
     </li>
+    )
 }
 
 export default MovieCard;

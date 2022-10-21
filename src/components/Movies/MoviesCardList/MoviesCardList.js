@@ -1,24 +1,24 @@
-
-import MovieCard from '../MoviesCard/MovieCard';
-import moviesArray from '../../../utils/moviesArray';
 import "./MoviesCardList.css";
+import moviesArray from '../../../utils/moviesArray';
+import MovieCard from "../MoviesCard/MovieCard";
 
-function MoviesCardList() {
+function MoviesCardList({ cards }) {
+
   return (
     <section className="movies-cards">
       <ul className="movies-cards__list">
-      {moviesArray.map((card) => {
-            return (
-              <MovieCard
-                key={card.id}
-                name={card.name}
-                hours={card.hours}
-                minutes={card.minutes}
-                save={card.save}
-                image={card.image}
-              />
-            );
-          })}
+        {moviesArray.map((card) => {
+          return (
+            <MovieCard
+              key={card.id.toString()}
+              name={card.name}
+              hours={card.hours}
+              minutes={card.minutes}
+              save={card.save}
+              image={card.image}
+            />
+          );
+        })}
       </ul>
       <button type="button" className="movie-cards__button">
         Ещё
