@@ -32,6 +32,12 @@
     background-color: #313131;
     border-radius: 50%;
     border: 3px solid #FFF;
+    transition: 1s;
+  }
+
+  .movie-card__saved:hover {
+    transform: scale(1.2);
+    cursor: pointer;
   }
 
   .movie-card__saved_type_active {
@@ -44,5 +50,19 @@
     font-weight: 400;
     font-size: 11px;
     line-height: 13px;
+    color: #8B8B8B;
   }
   
+  
+@media screen and (max-width: 990px) {
+  .movie-card__img {
+    height: 190px;
+  }
+}
+
+
+@media screen and (max-width: 767px) {
+  .movie-card__img {
+    height: 168px;
+  }
+}

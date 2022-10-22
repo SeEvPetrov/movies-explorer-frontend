@@ -2,7 +2,7 @@ import "./MoviesCardList.css";
 import moviesArray from '../../../utils/moviesArray';
 import MovieCard from "../MoviesCard/MovieCard";
 
-function MoviesCardList({ cards }) {
+function MoviesCardList() {
 
   return (
     <section className="movies-cards">

@@ -37,7 +37,7 @@
   opacity: 0.8;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 990px) {
   .header__container {
     padding: 0 30px;
   }
