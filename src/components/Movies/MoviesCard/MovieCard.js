@@ -1,6 +1,6 @@
 import './MovieCard.css';
 
-function MovieCard({name, hours, minutes, save, image}) {
+function MovieCard({name, hours, minutes, save, image, classStatus}) {
     return (
     <li className="movie-card">
         <img src={image} alt={name} className="movie-card__img"/>
@@ -8,7 +8,7 @@ function MovieCard({name, hours, minutes, save, image}) {
             <h3 className="movie-card__title">
                 {name}
             </h3>
-            <button className={`movie-card__saved ${save && "movie-card__saved_type_active"}`}>
+            <button className={`movie-card__btn ${classStatus} ${save && "movie-card__saved_type_active"}`}>
             </button>
         </div>
         <p className="movie-card__duration">

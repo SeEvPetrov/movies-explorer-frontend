@@ -7,8 +7,7 @@ import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import Footer from '../Footer/Footer';
 import './Movies.css';
 
-function Movies () {
-  const [isLoading, setIsLoading] = useState(false);
+function Movies ({isLoading}) {
 
     return (
       <>
