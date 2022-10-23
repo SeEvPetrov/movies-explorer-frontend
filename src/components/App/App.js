@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Main from "../Main/Main";
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
+import Profile from "../Profile/Profile";
 
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
@@ -22,6 +23,10 @@ function App() {
         <Route
           path="/saved-movies"
           element={<SavedMovies isLoading={isLoading} />}
+        ></Route>
+        <Route
+          path="/profile"
+          element={<Profile />}
         ></Route>
       </Routes>
     </div>

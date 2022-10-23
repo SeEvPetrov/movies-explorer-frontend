@@ -67,8 +67,8 @@
 
 .search__error {
   position: absolute;
-  left: 50%;
-  bottom: -30px;
+  left: 8%;
+  top: -10px;
   font-weight: 400;
   font-size: 13px;
   color: red;
@@ -87,10 +87,9 @@
   }
 }
 
-@media screen and (max-width: 890px) {
+@media screen and (max-width: 745px) {
   .search__error {
-    bottom: -25px;
-    font-size: 10px;
+   left: 9%;
   }
 }
 
@@ -118,7 +117,6 @@
   }
 
   .search__error {
-    bottom: -23px;
-    font-size: 8px;
+    left: 50%;
   }
 }
