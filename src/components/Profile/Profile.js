@@ -13,7 +13,7 @@ function Profile() {
       </Header>
       <section className="profile">
         <div className="profile__container">
-        <h2 className="profile__title">Привет, UserName</h2>
+        <h2 className="profile__title">Привет, UserName!</h2>
         <form className="profile__form">
           <label className="profile__label">
             <p className="profile__label-title">Имя</p>
