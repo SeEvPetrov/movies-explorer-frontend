@@ -7,7 +7,7 @@ function Register() {
       <div className="auth__container">
         <header className="auth__header">
           <Link to="/" className="auth__logo"></Link>
-          <h2 className="auth__title">Добро пожаловать</h2>
+          <h2 className="auth__title">Добро пожаловать!</h2>
         </header>
         <form action="#" className="auth__form" noValidate>
           <fieldset className="auth__form_fildset">
@@ -20,7 +20,7 @@ function Register() {
                 className="auth__input"
                 autoComplete="off"
               />
-              <span className="error__input"></span>
+              <span className="error__input">Что-то пошло не так...</span>
             </label>
             <label className="auth__input-container">
               <span className="auth__label">E-mail</span>
@@ -31,7 +31,7 @@ function Register() {
                 className="auth__input"
                 autoComplete="off"
               />
-              <span className="error__input"></span>
+              <span className="error__input">Что-то пошло не так...</span>
             </label>
             <label className="auth__input-container">
               <span className="auth__label">Пароль</span>
@@ -42,7 +42,7 @@ function Register() {
                 autoComplete="off"
                 className="auth__input"
               />
-              <span className="error__input"></span>
+              <span className="error__input">Что-то пошло не так...</span>
             </label>
             <button
               type="submit"
