@@ -9,7 +9,7 @@ function MoviesCardList() {
   const moviesSaved = moviesArray.filter((movie) => movie.save === true);
 
   return (
-    <section className="movies-cards">
+    <div className="movies-cards">
       {moviesPage ? (
         <>
           <ul className="movies-cards__list">
@@ -22,7 +22,7 @@ function MoviesCardList() {
                   minutes={card.minutes}
                   save={card.save}
                   image={card.image}
-                  classStatus={'movie-card__btn_type_saved'}
+                  classStatus={"movie-card__btn_type_saved"}
                 />
               );
             })}
@@ -43,14 +43,14 @@ function MoviesCardList() {
                   minutes={card.minutes}
                   // save={card.save}
                   image={card.image}
-                  classStatus={'movie-card__btn_type_delete'}
+                  classStatus={"movie-card__btn_type_delete"}
                 />
               );
             })}
           </ul>
         </>
       )}
-    </section>
+    </div>
   );
 }
 

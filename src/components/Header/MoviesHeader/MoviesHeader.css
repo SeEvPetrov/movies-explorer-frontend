@@ -1,12 +1,7 @@
-.navigate {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 60%;
-}
-
 .navigate__list {
   display: flex;
+  align-items: center;
+  justify-content: center;
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -14,6 +9,7 @@
 
 .navigate__item:first-of-type {
   margin-right: 16px;
+  margin-left: 52px;
 }
 
 .navigate__movies {
@@ -21,10 +17,10 @@
   font-weight: 500;
   font-size: 13px;
   line-height: 18px;
-	line-height: 2;
+  line-height: 2;
   text-decoration: none;
   color: #fff;
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .navigate__save-movies {
@@ -66,19 +62,19 @@
 }
 
 .navigate__movies::after {
-	content: "";
-	position: absolute;
-	left: 0;
-	display: block;
-	width: 0;
-	height: 2px;
-	background-color: #fff;
-	transition: width 0.3s ease-out;
+  content: "";
+  position: absolute;
+  left: 0;
+  display: block;
+  width: 0;
+  height: 2px;
+  background-color: #fff;
+  transition: width 0.3s ease-out;
 }
 
 .navigate__movies:hover::after,
 .navigate__movies:focus::after {
-	width: 100%;
+  width: 100%;
 }
 
 .navigate__account_text:hover {
@@ -103,6 +99,10 @@
   }
 
   .navigate {
+    display: none;
+  }
+
+  .navigate__account {
     display: none;
   }
 

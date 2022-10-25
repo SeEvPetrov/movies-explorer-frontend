@@ -23,15 +23,16 @@ function MoviesHeader() {
             </NavLink>
           </li>
         </ul>
-        <div className="navigate__account">
-          <Link to="/profile" className="navigate__account-link">
-            <p className="navigate__account_text">Аккаунт</p>
-          </Link>
-          <Link to="/profile">
-            <button className="navigate__account_img"></button>
-          </Link>
-        </div>
       </nav>
+      <div className="navigate__account">
+        <Link to="/profile" className="navigate__account-link">
+          <p className="navigate__account_text">Аккаунт</p>
+        </Link>
+        <Link to="/profile">
+          <button className="navigate__account_img"></button>
+        </Link>
+      </div>
+
       <button
         className="navigate__button-open"
         onClick={handleBurgerMenuOpenClick}

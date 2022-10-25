@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Login() {
   return (
-    <section className="register">
+    <section className="login">
       <div className="auth__container">
         <header className="auth__header">
           <Link to="/" className="auth__logo"></Link>

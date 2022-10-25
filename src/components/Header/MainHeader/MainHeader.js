@@ -1,17 +1,17 @@
-import { Link } from 'react-router-dom';
-import './MainHeader.css';
+import { Link } from "react-router-dom";
+import "./MainHeader.css";
 
 function MainHeader() {
   return (
-    <nav className='auth-links'>
-      <ul className='auth-links__list'>
-        <li className='auth-links__item'>
-          <Link to='/signup' className='auth-links__registration'>
+    <nav className="auth-links">
+      <ul className="auth-links__list">
+        <li className="auth-links__item">
+          <Link to="/signup" className="auth-links__registration">
             Регистрация
           </Link>
         </li>
-        <li className='auth-links__item'>
-          <Link to='/signin' className='auth-links__login'>
+        <li className="auth-links__item">
+          <Link to="/signin" className="auth-links__login">
             Войти
           </Link>
         </li>

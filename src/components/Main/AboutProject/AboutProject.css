@@ -35,26 +35,26 @@
   line-height: 143%;
 }
 
-.about__graph {
+.about__duration {
   display: flex;
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
 
-.about__graph-item {
+.about__duration-item {
   justify-content: center;
 }
 
-.about__graph-item:first-of-type {
+.about__duration-item:first-of-type {
   flex-basis: 20%;
 }
 
-.about__graph-item:last-of-type {
+.about__duration-item:last-of-type {
   flex-basis: 80%;
 }
 
-.about__graph-time {
+.about__duration-time {
   margin: 0;
   padding: 9px 14px;
   font-weight: 400;
@@ -63,16 +63,16 @@
   text-align: center;
 }
 
-.about__graph-time_black {
+.about__duration-time_black {
   background: #303030;
 }
 
-.about__graph-time_green {
+.about__duration-time_green {
   color: #000;
   background: #3ddc84;
 }
 
-.about__graph-technology {
+.about__duration-techs {
   margin: 0;
   padding-top: 14px;
   font-weight: 500;
@@ -120,23 +120,23 @@
     line-height: 16px;
   }
 
-  .about__graph-time {
+  .about__duration-time {
     padding: 11px 10px;
     font-size: 11px;
     line-height: 13px;
   }
 
-  .about__graph-technology {
+  .about__duration-techs {
     padding-top: 10px;
     font-size: 11px;
     line-height: 13px;
   }
 
-  .about__graph-item:first-of-type {
+  .about__duration-item:first-of-type {
     flex-basis: 35%;
   }
 
-  .about__graph-item:last-of-type {
+  .about__duration-item:last-of-type {
     flex-basis: 65%;
   }
 }

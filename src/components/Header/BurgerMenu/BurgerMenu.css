@@ -57,19 +57,19 @@
 }
 
 .burger-menu__link::after {
-	content: "";
-	position: absolute;
-	left: 0;
-	display: block;
-	width: 0;
-	height: 2px;
-	background-color: #fff;
-	transition: width 0.3s ease-out;
+  content: "";
+  position: absolute;
+  left: 0;
+  display: block;
+  width: 0;
+  height: 2px;
+  background-color: #fff;
+  transition: width 0.3s ease-out;
 }
 
 .burger-menu__link:hover::after,
 .burger-menu__link:focus::after {
-	width: 100%;
+  width: 100%;
 }
 
 .burger-menu__link:not(:last-child) {

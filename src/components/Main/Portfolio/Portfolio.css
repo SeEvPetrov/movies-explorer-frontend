@@ -38,7 +38,6 @@
   border-bottom: none;
 }
 
-
 .portfolio__link {
   display: flex;
   align-items: center;
@@ -60,7 +59,6 @@
 }
 
 .portfolio__link-arrow {
-  /* display: inline-block; */
   margin: 0;
   line-height: 200%;
   transition: opacity 0.4s ease;
