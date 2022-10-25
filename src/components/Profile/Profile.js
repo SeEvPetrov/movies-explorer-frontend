@@ -24,6 +24,7 @@ function Profile() {
                 minLength="3"
                 maxLength="30"
                 name="name"
+                required={true}
               />
             </label>
             <label className="profile__label">
@@ -35,12 +36,13 @@ function Profile() {
                 minLength="3"
                 maxLength="30"
                 name="name"
+                required={true}
               />
             </label>
           </form>
           <div className="profile__btns">
-            <button className="profile__btn_edit">Редактировать</button>
-            <button className="profile__btn_out">Выйти из аккаунта</button>
+            <button type="submit" className="profile__btn_edit">Редактировать</button>
+            <button type="submit" className="profile__btn_out">Выйти из аккаунта</button>
           </div>
         </div>
       </section>

@@ -36,7 +36,7 @@
 .movie-card__btn_type_saved {
   background-color: #313131;
   border-radius: 50%;
-  border: 3px solid #fff;
+  border: 2px solid #fff;
 }
 
 .movie-card__btn_type_delete {

@@ -19,6 +19,7 @@ function Register() {
                 placeholder="Имя"
                 className="auth__input"
                 autoComplete="off"
+                required
               />
               <span className="error__input">Что-то пошло не так...</span>
             </label>
@@ -30,6 +31,7 @@ function Register() {
                 placeholder="Email"
                 className="auth__input"
                 autoComplete="off"
+                required
               />
               <span className="error__input">Что-то пошло не так...</span>
             </label>
@@ -41,6 +43,7 @@ function Register() {
                 placeholder="Пароль"
                 autoComplete="off"
                 className="auth__input"
+                required
               />
               <span className="error__input">Что-то пошло не так...</span>
             </label>

@@ -10,6 +10,7 @@ function MovieCard({ name, hours, minutes, save, image, classStatus }) {
           className={`movie-card__btn ${classStatus} ${
             save && "movie-card__saved_type_active"
           }`}
+          type="button"
         ></button>
       </div>
       <p className="movie-card__duration">

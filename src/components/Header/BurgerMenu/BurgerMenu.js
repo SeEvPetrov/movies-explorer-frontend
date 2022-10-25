@@ -26,7 +26,7 @@ function BurgerMenu({ isOpen, isClose }) {
             <p className="navigate__account_text">Аккаунт</p>
           </Link>
           <Link to="/profile">
-            <button className="navigate__account_img"></button>
+            <button type="button" className="navigate__account_img"></button>
           </Link>
         </div>
       </div>

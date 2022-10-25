@@ -59,7 +59,14 @@
   background-image: url(../../../images/account.svg);
   background-position: center;
   background-repeat: no-repeat;
+  cursor: pointer;
+  transition: opacity 0.3s linear;
 }
+
+.navigate__account_img:hover {
+  opacity: .8;
+}
+
 
 .navigate__movies::after {
   content: "";

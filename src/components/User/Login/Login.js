@@ -16,6 +16,7 @@ function Login() {
               <input
                 type="email"
                 name="email"
+                required
                 placeholder="Email"
                 className="auth__input"
                 autoComplete="off"
@@ -27,6 +28,7 @@ function Login() {
               <input
                 type="password"
                 name="password"
+                required
                 placeholder="Пароль"
                 autoComplete="off"
                 className="auth__input"
