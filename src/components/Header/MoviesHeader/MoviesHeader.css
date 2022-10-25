@@ -1,0 +1,127 @@
+.navigate__list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navigate__item:first-of-type {
+  margin-right: 16px;
+  margin-left: 52px;
+}
+
+.navigate__movies {
+  position: relative;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 18px;
+  line-height: 2;
+  text-decoration: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.navigate__save-movies {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  text-decoration: none;
+  color: #fff;
+}
+
+.navigate__account {
+  display: flex;
+  align-items: center;
+  padding: 7px 0;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 114%;
+}
+.navigate__account-link {
+  text-decoration: none;
+}
+
+.navigate__account_text {
+  margin-right: 13px;
+  color: #fff;
+  text-decoration: none;
+  transition: opacity 0.3s linear;
+}
+
+.navigate__account_img {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 6px;
+  background-color: #313131;
+  background-image: url(../../../images/account.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: opacity 0.3s linear;
+}
+
+.navigate__account_img:hover {
+  opacity: .8;
+}
+
+
+.navigate__movies::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  display: block;
+  width: 0;
+  height: 2px;
+  background-color: #fff;
+  transition: width 0.3s ease-out;
+}
+
+.navigate__movies:hover::after,
+.navigate__movies:focus::after {
+  width: 100%;
+}
+
+.navigate__account_text:hover {
+  opacity: 0.8;
+}
+
+.navigate__button-open {
+  display: none;
+  border: none;
+  padding: 0;
+  width: 44px;
+  height: 44px;
+  font: inherit;
+  color: inherit;
+  background-image: url(../../../images/burger.svg);
+  background-color: transparent;
+}
+
+@media screen and (max-width: 768px) {
+  .navigate__button-open {
+    display: block;
+  }
+
+  .navigate {
+    display: none;
+  }
+
+  .navigate__account {
+    display: none;
+  }
+
+  .header__container {
+    justify-content: space-between;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .navigate__button-open {
+    margin-right: 10px;
+    width: 30px;
+    height: 43px;
+  }
+}

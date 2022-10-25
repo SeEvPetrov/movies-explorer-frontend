@@ -1,0 +1,11 @@
+.app {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  min-width: 320px;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  color: #fff;
+  user-select: none;
+  min-height: 100vh;
+  background: #202020;
+}

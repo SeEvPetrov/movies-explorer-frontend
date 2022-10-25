@@ -1,0 +1,50 @@
+.auth-links__list {
+  display: flex;
+  align-items: center;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  gap: 30px;
+}
+
+.auth-links__registration {
+  align-items: center;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 133%;
+  text-decoration: none;
+  color: #fff;
+  transition: opacity 0.3s linear;
+}
+
+.auth-links__registration:hover {
+  opacity: 0.7;
+}
+
+.auth-links__login {
+  border-radius: 3px;
+  padding: 8px 20px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 133%;
+  text-decoration: none;
+  color: #000;
+  background-color: #3ddc84;
+}
+
+@media screen and (max-width: 320px) {
+  .auth-links__list {
+    gap: 14px;
+  }
+
+  .auth-links__login {
+    padding: 5px 12px;
+    font-size: 10px;
+    line-height: 160%;
+  }
+
+  .auth-links__registration {
+    font-size: 10px;
+    line-height: 160%;
+  }
+}
