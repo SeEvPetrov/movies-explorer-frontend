@@ -5,9 +5,11 @@ import Profile from "../Profile/Profile";
 import Register from "../User/Register/Register";
 import Login from "../User/Login/Login";
 import PageNotFound from "../PageNotFound/PageNotFound";
+import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 
+
+import { CurrentUserContext } from "../../context/CurrentUserContext";
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (

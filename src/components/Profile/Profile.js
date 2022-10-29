@@ -1,5 +1,6 @@
 import Header from "../Header/Header";
 import MainMovies from "../Header/MoviesHeader/MoviesHeader";
+import { CurrentUserContext } from "../../../context/CurrentUserContext";
 import "./Profile.css";
 
 function Profile() {
