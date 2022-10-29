@@ -7,7 +7,7 @@ import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import Footer from '../Footer/Footer';
 import './Movies.css';
 
-function Movies ({isLoading}) {
+function Movies ({isLoading, displayedMovies}) {
 
     return (
       <>
@@ -20,7 +20,7 @@ function Movies ({isLoading}) {
         <section className="movies">
       <SearchForm />
       {isLoading && <Preloader /> }
-      <MoviesCardList />
+      <MoviesCardList displayedMovies={displayedMovies}/>
       <Footer />
       </section>
       </>

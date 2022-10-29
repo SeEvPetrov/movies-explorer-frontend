@@ -3,7 +3,7 @@ import moviesArray from "../../../utils/moviesArray";
 import MovieCard from "../MoviesCard/MovieCard";
 import { useLocation } from "react-router-dom";
 
-function MoviesCardList() {
+function MoviesCardList({displayedMovies}) {
   const location = useLocation();
   let moviesPage = location.pathname === "/movies";
   const moviesSaved = moviesArray.filter((movie) => movie.save === true);
