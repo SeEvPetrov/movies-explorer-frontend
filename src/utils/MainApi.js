@@ -63,7 +63,7 @@ class MainApi {
   }
   
   const mainApi = new MainApi({
-    url: 'https://api.movies.explorer.nomorepartiesxyz.ru',
+    url: 'https://api.movies.petrov.nomoredomains.icu',
   });
   
   export default mainApi;
