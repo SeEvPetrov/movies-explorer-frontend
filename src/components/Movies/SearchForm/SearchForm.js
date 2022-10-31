@@ -27,7 +27,7 @@ function SearchForm({
     setSearchFormState({
       ...searchFormState,
       errorText: "",
-      [evt.target.name]: evt.target.value,
+      keyWord: evt.target.value,
       isFormValid: evt.target.closest("form").checkValidity(),
     });
   };

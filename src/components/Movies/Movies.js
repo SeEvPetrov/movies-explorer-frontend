@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "../Header/Header";
 import MainMovies from "../Header/MoviesHeader/MoviesHeader";
 import SearchForm from "./SearchForm/SearchForm";
@@ -24,6 +24,8 @@ function Movies({
   allSavedMovies,
   handleShowMoreMovies,
 }) {
+  useEffect(() => {console.log(displayedMovies)})
+
   return (
     <>
       <Header

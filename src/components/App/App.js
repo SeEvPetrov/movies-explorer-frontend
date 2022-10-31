@@ -10,7 +10,7 @@ import PageNotFound from "../PageNotFound/PageNotFound";
 
 import moviesApi from "../../utils/MoviesApi";
 import mainApi from "../../utils/MainApi";
-import * as apiAuth from "../../utils/ApiAuth";
+// import * as apiAuth from "../../utils/ApiAuth";
 
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 import "./App.css";
@@ -25,7 +25,7 @@ import {
   MOVIES_TO_LOAD_2,
   MOVIES_TO_LOAD_3,
   MOVIES_TO_LOAD_4,
-} from "../../../utils/constants";
+} from "../../utils/constants";
 
 function App() {
   const navigate = useNavigate();
@@ -56,33 +56,71 @@ function App() {
   //   tokenCheck();
   // }, []);
 
+  // useEffect(() => {
+  //   if (loggedIn) {
+  //     mainApi
+  //       .getSavedMovies()
+  //       .then((res) => {
+  //         setSavedMovies(res);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //     apiAuth
+  //       .getUserInfo()
+  //       .then((data) => {
+  //         setCurrentUser(data);
+  //       })
+  //       .catch((err) => {
+  //         console.error(`Данные пользователя не получены: ${err}`);
+  //       });
+  //     if (JSON.parse(localStorage.getItem("filteredMovies"))) {
+  //       setMovies(JSON.parse(localStorage.getItem("filteredMovies")));
+  //       setChecked(JSON.parse(localStorage.getItem("checkbox")));
+  //       setCheckedSaveMovies(
+  //         JSON.parse(localStorage.getItem("checkboxSaveMovies"))
+  //       );
+  //     }
+  //   }
+  // }, [loggedIn]);
+
   useEffect(() => {
-    if (loggedIn) {
-      mainApi
-        .getSavedMovies()
-        .then((res) => {
-          setSavedMovies(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      apiAuth
-        .getUserInfo()
-        .then((data) => {
-          setCurrentUser(data);
-        })
-        .catch((err) => {
-          console.error(`Данные пользователя не получены: ${err}`);
-        });
-      if (JSON.parse(localStorage.getItem("filteredMovies"))) {
-        setMovies(JSON.parse(localStorage.getItem("filteredMovies")));
-        setChecked(JSON.parse(localStorage.getItem("checkbox")));
-        setCheckedSaveMovies(
-          JSON.parse(localStorage.getItem("checkboxSaveMovies"))
-        );
+    const handleWindowResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    if (location.pathname === "/movies") {
+      if (windowWidth <= BREAKPOINT_480) {
+        setDisplayedMovies(VISIBLE_MOVIES_5);
+        setMoviesToLoad(MOVIES_TO_LOAD_2);
+      } else if (
+        windowWidth <= BREAKPOINT_990 &&
+        windowWidth > BREAKPOINT_480
+      ) {
+        setDisplayedMovies(VISIBLE_MOVIES_8);
+        setMoviesToLoad(MOVIES_TO_LOAD_2);
+      } else if (
+        windowWidth <= BREAKPOINT_1280 &&
+        windowWidth > BREAKPOINT_990
+      ) {
+        setDisplayedMovies(VISIBLE_MOVIES_12);
+        setMoviesToLoad(MOVIES_TO_LOAD_3);
+      } else if (windowWidth > BREAKPOINT_1280) {
+        setDisplayedMovies(VISIBLE_MOVIES_16);
+        setMoviesToLoad(MOVIES_TO_LOAD_4);
       }
     }
-  }, [loggedIn]);
+
+    window.addEventListener("resize", handleWindowResize);
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, [windowWidth, location]);
+
+  const handleShowMoreMovies = () => {
+    console.log(displayedMovies);
+    setDisplayedMovies(displayedMovies + moviesToLoad);
+  };
 
   // const tokenCheck = () => {
   //   const jwt = localStorage.getItem("jwt");
@@ -292,43 +330,6 @@ function App() {
 
   //
 
-  useEffect(() => {
-    const handleWindowResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    if (location.pathname === "/movies") {
-      if (windowWidth <= BREAKPOINT_480) {
-        setDisplayedMovies(VISIBLE_MOVIES_5);
-        setMoviesToLoad(MOVIES_TO_LOAD_2);
-      } else if (
-        windowWidth <= BREAKPOINT_990 &&
-        windowWidth > BREAKPOINT_480
-      ) {
-        setDisplayedMovies(VISIBLE_MOVIES_8);
-        setMoviesToLoad(MOVIES_TO_LOAD_2);
-      } else if (
-        windowWidth <= BREAKPOINT_1280 &&
-        windowWidth > BREAKPOINT_990
-      ) {
-        setDisplayedMovies(VISIBLE_MOVIES_12);
-        setMoviesToLoad(MOVIES_TO_LOAD_3);
-      } else if (windowWidth > BREAKPOINT_1280) {
-        setDisplayedMovies(VISIBLE_MOVIES_16);
-        setMoviesToLoad(MOVIES_TO_LOAD_4);
-      }
-    }
-
-    window.addEventListener("resize", handleWindowResize);
-    return () => {
-      window.removeEventListener("resize", handleWindowResize);
-    };
-  }, [windowWidth, location]);
-
-  const handleShowMoreMovies = () => {
-    setDisplayedMovies(displayedMovies + moviesToLoad);
-  };
-
   return (
     <div className="app">
       <Routes>
@@ -337,6 +338,7 @@ function App() {
           path="/movies"
           element={
             <Movies
+              displayedMovies={displayedMovies}
               onSubmit={handleSearchMovies}
               movies={movies}
               isLoading={isLoading}

@@ -35,7 +35,7 @@ function MoviesCardList({
   //   ? 'movies-list__error_visible'
   //   : 'movies-list__error';
 
-  let buttonClass =
+  let buttonMoreClass =
     !(movies.length > 4) ||
     displayedMovies >= movies.length ||
     displayedMovies >= moviesFilterArr.length
@@ -70,7 +70,7 @@ function MoviesCardList({
               );
             })}
           </ul>
-          <button type="button" className={buttonClass}>
+          <button type="button" className={buttonMoreClass} onClick={handleShowMoreMovies}>
             Ещё
           </button>
         </>
