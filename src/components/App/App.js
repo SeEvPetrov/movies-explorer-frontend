@@ -42,7 +42,6 @@ function App() {
   const [displayedMovies, setDisplayedMovies] = useState(0);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isLoginMessage, setLoginMessage] = useState(false);
-  const [isErrorLoginBtn, setIsErrorLoginBtn] = useState(false);
   const [movies, setMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -80,7 +79,6 @@ function App() {
       .then((res) => {
         if (res.token) {
           localStorage.setItem("jwt", res.token);
-          setIsErrorLoginBtn(false);
           auth.checkToken(res.token).then((res) => {
             if (res) {
               setTimeout(() => navigate("/movies"), 800);
@@ -93,7 +91,6 @@ function App() {
         if (err.includes(401)) {
           setLoginMessage("Вы ввели неправильный логин или пароль.");
         }
-        setIsErrorLoginBtn(true);
       });
   };
 
@@ -296,8 +293,6 @@ function App() {
     setTimeout(() => setIsLoading(false), 1000);
   };
 
-
-
   // const onUpdateUser = (name, email) => {
   //   apiAuth
   //     .updateUserInfo(name, email)
@@ -320,7 +315,6 @@ function App() {
     setCurrentUser({});
     setErrorMessage("");
     setLoginMessage(false);
-    setIsErrorLoginBtn(false);
     setIsLoading(false);
     setIsFailed(false);
     setMovies([]);
@@ -366,13 +360,18 @@ function App() {
         <Route
           path="/signup"
           element={
-            <Register
-              setErrorMessage={errorMessage}
-              onRegister={onRegister}
+            <Register setErrorMessage={errorMessage} onRegister={onRegister} />
+          }
+        ></Route>
+        <Route
+          path="/signin"
+          element={
+            <Login
+              onLogin={onLogin}
+              errorMessage={errorMessage}
             />
           }
         ></Route>
-        <Route path="/signin" element={<Login />}></Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </div>

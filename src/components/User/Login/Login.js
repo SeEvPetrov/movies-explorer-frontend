@@ -1,7 +1,18 @@
 import "../Auth/Auth.css";
+import { useFormWithValidation } from "../../../hooks/useFormWithValidation";
 import { Link } from "react-router-dom";
 
-function Login() {
+function Login({ onLogin, errorMessage }) {
+  const checkInput = useFormWithValidation();
+  const { name, email, password } = checkInput.errors;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const { email, password } = checkInput.values;
+    onLogin(email, password);
+    checkInput.resetForm();
+  };
+
   return (
     <section className="login">
       <div className="auth__container">
