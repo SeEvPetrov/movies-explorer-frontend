@@ -25,8 +25,6 @@ import {
   MOVIES_TO_LOAD_2,
   MOVIES_TO_LOAD_3,
   MOVIES_TO_LOAD_4,
-  UNAUTHORIZED,
-  CONFLICT,
 } from "../../utils/constants";
 
 function App() {
@@ -41,7 +39,6 @@ function App() {
   const [moviesToLoad, setMoviesToLoad] = useState(0);
   const [displayedMovies, setDisplayedMovies] = useState(0);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [isLoginMessage, setLoginMessage] = useState(false);
   const [movies, setMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -84,7 +81,7 @@ function App() {
           localStorage.setItem("jwt", res.token);
           auth.checkToken(res.token).then((res) => {
             if (res) {
-              setTimeout(() => navigate("/movies"), 800);
+              setTimeout(() => navigate("/movies"), 300);
               setLoggedIn(true);
             }
           });
@@ -92,7 +89,7 @@ function App() {
       })
       .catch((err) => {
         if (err.includes(401)) {
-          setLoginMessage("Вы ввели неправильный логин или пароль.");
+          setErrorMessage("Вы ввели неправильный логин или пароль.");
         }
       });
   };
@@ -325,7 +322,6 @@ function App() {
     setLoggedIn(false);
     setCurrentUser({});
     setErrorMessage("");
-    setLoginMessage(false);
     setIsLoading(false);
     setIsFailed(false);
     setMovies([]);
@@ -341,7 +337,7 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
     <div className="app">
       <Routes>
-        <Route path="/" element={<Main />}></Route>
+        <Route path="/" element={<Main loggedIn={loggedIn}/>}></Route>
         <Route
           path="/movies"
           element={

@@ -65,7 +65,6 @@ function MoviesCardList({
                   onDelete={onDelete}
                   movie={card}
                   allSavedMovies={allSavedMovies}
-                  // classStatus={"movie-card__btn_type_saved"}
                 />
               );
             })}
