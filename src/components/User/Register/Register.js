@@ -5,10 +5,12 @@ import { Link } from "react-router-dom";
 function Register({ onRegister, errorMessage }) {
   const checkInput = useFormWithValidation();
   const { name, email, password } = checkInput.errors;
-
+  
+console.log(errorMessage);
   const handleSubmit = (e) => {
     e.preventDefault();
     const { name, email, password } = checkInput.values;
+    console.log(checkInput.values);
     onRegister(name, email, password);
     checkInput.resetForm();
   };
@@ -52,7 +54,7 @@ function Register({ onRegister, errorMessage }) {
                 placeholder="Email"
                 className="auth__input"
                 autoComplete="off"
-                minLength="6"
+                minLength="2"
                 maxLength="30"
                 pattern='^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
                 onChange={checkInput.handleChange}
@@ -77,11 +79,11 @@ function Register({ onRegister, errorMessage }) {
               />
               <span className={`error__input ${!checkInput.isValid && "error__input_visible"}`}>{password}</span>
             </label>
-            <span className={`error__input ${errorMessage && "error__input_visible"}`}>{errorMessage}</span>
+            <span className="error__res">{errorMessage}</span>
             <button
               type="submit"
               className="auth__submit-btn auth__submit-btn_register"
-              disabled={checkInput.isValid}
+              disabled={!checkInput.isValid}
             >
               Зарегистрироваться
             </button>

@@ -37,7 +37,7 @@ function App() {
 
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
   const [moviesToLoad, setMoviesToLoad] = useState(0);
   const [displayedMovies, setDisplayedMovies] = useState(0);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -52,9 +52,9 @@ function App() {
   const [isNotFound, setIsNotFound] = useState(false);
   const [allSavedMovies, setAllSavedMovies] = useState([]);
 
-  // useEffect(() => {
-  //   tokenCheck();
-  // }, []);
+  useEffect(() => {
+    tokenCheck();
+  }, []);
 
   const onRegister = (name, email, password) => {
     auth
@@ -66,10 +66,13 @@ function App() {
       })
       .catch((err) => {
         setErrorMessage(
-          err.status === CONFLICT
+          err.status !== 400
             ? "Пользователь с таким email уже зарегистрирован"
             : "При регистрации произошла ошибка."
         );
+      })
+      .finally(() => {
+        resetErrorText();
       });
   };
 
@@ -94,35 +97,40 @@ function App() {
       });
   };
 
-  // const resetErrorText = () => { setTimeout(() => setErrorMessage(''), 10000) };
+  const resetErrorText = () => { setTimeout(() => setErrorMessage(''), 10000) };
 
-  // useEffect(() => {
-  //   if (loggedIn) {
-  //     mainApi
-  //       .getSavedMovies()
-  //       .then((res) => {
-  //         setSavedMovies(res);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //     apiAuth
-  //       .getUserInfo()
-  //       .then((data) => {
-  //         setCurrentUser(data);
-  //       })
-  //       .catch((err) => {
-  //         console.error(`Данные пользователя не получены: ${err}`);
-  //       });
-  //     if (JSON.parse(localStorage.getItem('filteredMovies'))) {
-  //       setMovies(JSON.parse(localStorage.getItem('filteredMovies')));
-  //       setChecked(JSON.parse(localStorage.getItem('checkbox')));
-  //       setCheckedSaveMovies(
-  //         JSON.parse(localStorage.getItem('checkboxSaveMovies'))
-  //       );
-  //     }
-  //   }
-  // }, [loggedIn]);
+
+
+  useEffect(() => {
+    if (loggedIn) {
+      mainApi
+        .getSavedMovies()
+        .then((res) => {
+          setSavedMovies(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      auth
+        .getUserInfo()
+        .then((data) => {
+          setCurrentUser(data);
+        })
+        .catch((err) => {
+          console.error(`Данные пользователя не получены: ${err}`);
+        });
+      if (JSON.parse(localStorage.getItem('filteredMovies'))) {
+        setMovies(JSON.parse(localStorage.getItem('filteredMovies')));
+        setChecked(JSON.parse(localStorage.getItem('checkbox')));
+        setCheckedSaveMovies(
+          JSON.parse(localStorage.getItem('checkboxSaveMovies'))
+        );
+      }
+    }
+  }, [loggedIn]);
+
+
+
 
   useEffect(() => {
     const handleWindowResize = () => {
@@ -162,24 +170,27 @@ function App() {
     setDisplayedMovies(displayedMovies + moviesToLoad);
   };
 
-  // const tokenCheck = () => {
-  //   const jwt = localStorage.getItem('jwt');
 
-  //   if (jwt) {
-  //     apiAuth
-  //       .checkToken(jwt)
-  //       .then((res) => {
-  //         if (res) {
-  //           setLoggedIn(true);
-  //           navigate(location.pathname);
-  //         }
-  //       })
-  //       .catch((err) => {
-  //         onSignOut();
-  //         console.error(err);
-  //       });
-  //   }
-  // };
+  // 
+
+  const tokenCheck = () => {
+    const jwt = localStorage.getItem('jwt');
+
+    if (jwt) {
+      auth
+        .checkToken(jwt)
+        .then((res) => {
+          if (res) {
+            setLoggedIn(true);
+            navigate(location.pathname);
+          }
+        })
+        .catch((err) => {
+          onSignOut();
+          console.error(err);
+        });
+    }
+  };
 
   const handleSaveMovie = (movie) => {
     mainApi
@@ -327,6 +338,7 @@ function App() {
   //
 
   return (
+    <CurrentUserContext.Provider value={currentUser}>
     <div className="app">
       <Routes>
         <Route path="/" element={<Main />}></Route>
@@ -360,7 +372,7 @@ function App() {
         <Route
           path="/signup"
           element={
-            <Register setErrorMessage={errorMessage} onRegister={onRegister} />
+            <Register errorMessage={errorMessage} onRegister={onRegister} />
           }
         ></Route>
         <Route
@@ -375,6 +387,7 @@ function App() {
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </div>
+    </CurrentUserContext.Provider>
   );
 }
 

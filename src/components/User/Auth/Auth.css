@@ -85,6 +85,13 @@
   visibility: visible;
 }
 
+.error__res {
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #ee3465;
+}
+
 .auth__submit-btn {
   width: 100%;
   font-weight: 500;
@@ -98,6 +105,12 @@
   margin-bottom: 16px;
   transition: opacity 0.3s linear;
   cursor: pointer;
+}
+
+.auth__submit-btn:disabled {
+  color: #c2c2c2;
+  background: #f8f8f8;
+  pointer-events: none;
 }
 
 .auth__submit-btn_register {
