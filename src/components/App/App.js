@@ -10,7 +10,7 @@ import PageNotFound from "../PageNotFound/PageNotFound";
 
 import moviesApi from "../../utils/MoviesApi";
 import mainApi from "../../utils/MainApi";
-// import * as apiAuth from "../../utils/ApiAuth";
+import * as auth from "../../utils/Auth";
 
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 import "./App.css";
@@ -25,6 +25,8 @@ import {
   MOVIES_TO_LOAD_2,
   MOVIES_TO_LOAD_3,
   MOVIES_TO_LOAD_4,
+  UNAUTHORIZED,
+  CONFLICT,
 } from "../../utils/constants";
 
 function App() {
@@ -35,26 +37,67 @@ function App() {
 
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [moviesToLoad, setMoviesToLoad] = useState(0);
   const [displayedMovies, setDisplayedMovies] = useState(0);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  // const [isErrorRegisterBtn, setIsErrorRegisterBtn] = useState(false);
-  // const [isRegisterMessage, setRegisterMessage] = useState(false);
-  // const [isLoginMessage, setLoginMessage] = useState(false);
-  // const [isErrorLoginBtn, setIsErrorLoginBtn] = useState(false);
+  const [isLoginMessage, setLoginMessage] = useState(false);
+  const [isErrorLoginBtn, setIsErrorLoginBtn] = useState(false);
   const [movies, setMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isFailed, setIsFailed] = useState(false);
   const [checked, setChecked] = useState(true);
   const [checkedSaveMovies, setCheckedSaveMovies] = useState(true);
-  // const [isMessageProfile, setIsMessageProfile] = useState(false);
+  const [isMessageProfile, setIsMessageProfile] = useState(false);
   const [isNotFound, setIsNotFound] = useState(false);
   const [allSavedMovies, setAllSavedMovies] = useState([]);
 
   // useEffect(() => {
   //   tokenCheck();
   // }, []);
+
+  const onRegister = (name, email, password) => {
+    auth
+      .register(name, email, password)
+      .then((data) => {
+        if (data) {
+          onLogin(email, password);
+        }
+      })
+      .catch((err) => {
+        setErrorMessage(
+          err.status === CONFLICT
+            ? "Пользователь с таким email уже зарегистрирован"
+            : "При регистрации произошла ошибка."
+        );
+      });
+  };
+
+  const onLogin = (email, password) => {
+    auth
+      .authorize(email, password)
+      .then((res) => {
+        if (res.token) {
+          localStorage.setItem("jwt", res.token);
+          setIsErrorLoginBtn(false);
+          auth.checkToken(res.token).then((res) => {
+            if (res) {
+              setTimeout(() => navigate("/movies"), 800);
+              setLoggedIn(true);
+            }
+          });
+        }
+      })
+      .catch((err) => {
+        if (err.includes(401)) {
+          setLoginMessage("Вы ввели неправильный логин или пароль.");
+        }
+        setIsErrorLoginBtn(true);
+      });
+  };
+
+  // const resetErrorText = () => { setTimeout(() => setErrorMessage(''), 10000) };
 
   // useEffect(() => {
   //   if (loggedIn) {
@@ -74,11 +117,11 @@ function App() {
   //       .catch((err) => {
   //         console.error(`Данные пользователя не получены: ${err}`);
   //       });
-  //     if (JSON.parse(localStorage.getItem("filteredMovies"))) {
-  //       setMovies(JSON.parse(localStorage.getItem("filteredMovies")));
-  //       setChecked(JSON.parse(localStorage.getItem("checkbox")));
+  //     if (JSON.parse(localStorage.getItem('filteredMovies'))) {
+  //       setMovies(JSON.parse(localStorage.getItem('filteredMovies')));
+  //       setChecked(JSON.parse(localStorage.getItem('checkbox')));
   //       setCheckedSaveMovies(
-  //         JSON.parse(localStorage.getItem("checkboxSaveMovies"))
+  //         JSON.parse(localStorage.getItem('checkboxSaveMovies'))
   //       );
   //     }
   //   }
@@ -123,7 +166,7 @@ function App() {
   };
 
   // const tokenCheck = () => {
-  //   const jwt = localStorage.getItem("jwt");
+  //   const jwt = localStorage.getItem('jwt');
 
   //   if (jwt) {
   //     apiAuth
@@ -253,47 +296,7 @@ function App() {
     setTimeout(() => setIsLoading(false), 1000);
   };
 
-  // const onRegister = (name, email, password) => {
-  //   apiAuth
-  //     .register(name, email, password)
-  //     .then((data) => {
-  //       if (data) {
-  //         onLogin(email, password);
-  //       }
-  //       setIsErrorRegisterBtn(false);
-  //     })
-  //     .catch((err) => {
-  //       err.status !== 400
-  //         ? setRegisterMessage("Пользователь с таким email уже зарегистрирован")
-  //         : setRegisterMessage(
-  //             "При регистрации пользователя произошла ошибка."
-  //           );
-  //       setIsErrorRegisterBtn(true);
-  //     });
-  // };
 
-  // const onLogin = (email, password) => {
-  //   apiAuth
-  //     .authorize(email, password)
-  //     .then((res) => {
-  //       if (res.token) {
-  //         localStorage.setItem("jwt", res.token);
-  //         setIsErrorLoginBtn(false);
-  //         apiAuth.checkToken(res.token).then((res) => {
-  //           if (res) {
-  //             setTimeout(() => navigate("/movies"), 800);
-  //             setLoggedIn(true);
-  //           }
-  //         });
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       if (err.includes(401)) {
-  //         setLoginMessage("Вы ввели неправильный логин или пароль.");
-  //       }
-  //       setIsErrorLoginBtn(true);
-  //     });
-  // };
 
   // const onUpdateUser = (name, email) => {
   //   apiAuth
@@ -310,23 +313,22 @@ function App() {
   //     });
   // };
 
-  // const onSignOut = () => {
-  //   localStorage.clear();
-  //   navigate("/");
-  //   setLoggedIn(false);
-  //   setCurrentUser({});
-  //   setIsErrorRegisterBtn(false);
-  //   setRegisterMessage(false);
-  //   setLoginMessage(false);
-  //   setIsErrorLoginBtn(false);
-  //   setIsLoading(false);
-  //   setIsFailed(false);
-  //   setMovies([]);
-  //   setSavedMovies([]);
-  //   setChecked(true);
-  //   setCheckedSaveMovies(true);
-  //   setIsNotFound(false);
-  // };
+  const onSignOut = () => {
+    localStorage.clear();
+    navigate("/");
+    setLoggedIn(false);
+    setCurrentUser({});
+    setErrorMessage("");
+    setLoginMessage(false);
+    setIsErrorLoginBtn(false);
+    setIsLoading(false);
+    setIsFailed(false);
+    setMovies([]);
+    setSavedMovies([]);
+    setChecked(true);
+    setCheckedSaveMovies(true);
+    setIsNotFound(false);
+  };
 
   //
 
@@ -361,7 +363,15 @@ function App() {
           element={<SavedMovies isLoading={false} />}
         ></Route>
         <Route path="/profile" element={<Profile />}></Route>
-        <Route path="/signup" element={<Register />}></Route>
+        <Route
+          path="/signup"
+          element={
+            <Register
+              setErrorMessage={errorMessage}
+              onRegister={onRegister}
+            />
+          }
+        ></Route>
         <Route path="/signin" element={<Login />}></Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>
