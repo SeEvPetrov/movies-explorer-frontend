@@ -1,5 +1,4 @@
 import "./MoviesCardList.css";
-import moviesArray from "../../../utils/moviesArray";
 import MovieCard from "../MoviesCard/MovieCard";
 import { useLocation } from "react-router-dom";
 
@@ -30,22 +29,12 @@ function MoviesCardList({
 
   let moviesFilterArr = !checked ? searchShortMovies(movies) : movies;
 
-  // let classTextError =
-  // isFailed && !isNotFound
-  //   ? 'movies-list__error_visible'
-  //   : 'movies-list__error';
-
   let buttonMoreClass =
     !(movies.length > 4) ||
     displayedMovies >= movies.length ||
     displayedMovies >= moviesFilterArr.length
       ? "movie-cards__button_hidden"
       : "movie-cards__button";
-
-  // let classTextNotFound =
-  //   isNotFound && moviesFilterArr.length === 0
-  //     ? 'movies-list__not-found_visible'
-  //     : 'movies-list__not-found';
 
   return (
     <div className="movies-cards">
@@ -79,7 +68,7 @@ function MoviesCardList({
             {saveMoviesFilterArr.map((card) => {
               return (
                 <MovieCard
-                  key={card.id}
+                  key={card._id}
                   name={card.nameRU}
                   duration={card.duration}
                   trailerLink={card.trailerLink}

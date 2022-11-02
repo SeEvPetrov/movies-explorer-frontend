@@ -54,7 +54,7 @@ function SearchForm({
           <input
             type="text"
             className="search__input"
-            alue={searchFormState.keyWord}
+            value={searchFormState.keyWord}
             onChange={handleInputChange}
             placeholder="Фильм"
             required

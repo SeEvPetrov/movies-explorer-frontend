@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Header from "../Header/Header";
 import MainMovies from "../Header/MoviesHeader/MoviesHeader";
 import SearchForm from "./SearchForm/SearchForm";

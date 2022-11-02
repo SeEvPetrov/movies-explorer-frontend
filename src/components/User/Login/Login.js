@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function Login({ onLogin, errorMessage }) {
   const checkInput = useFormWithValidation();
-  const { name, email, password } = checkInput.errors;
+  const { email, password } = checkInput.errors;
 
   const handleSubmit = (e) => {
     e.preventDefault();

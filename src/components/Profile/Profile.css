@@ -24,6 +24,7 @@
 }
 
 .profile__label {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -49,18 +50,75 @@
   line-height: 13px;
   text-align: right;
   background-color: transparent;
+  color: #fff;
 }
 
 .profile__label_input:focus {
   border: none;
   text-align: right;
   background-color: transparent;
+  color: #fff;
+}
+
+.profile__error__input {
+  position: absolute;
+  bottom: 0;
+  display: block;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #ee3465;
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
+}
+
+.profile__error__input_visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.save__container {
+  margin-top: 203px;
+}
+
+.profile__res {
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #ee3465;
 }
 
 .profile__btns {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.profile__btn_save {
+  width: 100%;
+  margin-top: 20px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  border: none;
+  border-radius: 3px;
+  background-color: #4285f4;
+  height: 45px;
+  color: #fff;
+  margin-bottom: 16px;
+  transition: opacity 0.3s linear;
+  cursor: pointer;
+}
+
+.profile__btn_save:disabled {
+  color: #c2c2c2;
+  background: #f8f8f8;
+  pointer-events: none;
+}
+
+.profile__btn_save:hover {
+  opacity: 0.8;
 }
 
 .profile__btn_edit {

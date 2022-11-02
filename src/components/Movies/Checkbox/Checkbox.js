@@ -9,6 +9,7 @@ function Checkbox({ onCheckbox, checked, checkedSaveMovies }) {
 
   return (
     <div className="checkbox checkbox__container">
+      {location.pathname === '/movies' ? (
       <input
         type="checkbox"
         className="custom-checkbox"
@@ -18,7 +19,17 @@ function Checkbox({ onCheckbox, checked, checkedSaveMovies }) {
         checked={checked}
         onChange={handleCheckbox}
       />
-
+      ) : (
+        <input
+        type="checkbox"
+        className="custom-checkbox"
+        id="custom-checkbox"
+        name="custom-checkbox"
+        defaultValue="yes"
+        checked={checkedSaveMovies}
+        onChange={handleCheckbox}
+        />
+      )}
       <label htmlFor="custom-checkbox"></label>
       <p className="checkbox__title">Короткометражки</p>
     </div>
