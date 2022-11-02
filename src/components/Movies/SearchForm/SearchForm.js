@@ -5,7 +5,7 @@ import "./SearchForm.css";
 
 function SearchForm({
   onSubmit,
-  searchKeyword,
+  searchKey,
   onCheckbox,
   checked,
   checkedSaveMovies,
@@ -18,8 +18,8 @@ function SearchForm({
   });
 
   useEffect(() => {
-    if (searchKeyword && location.pathname === "/movies") {
-      setSearchFormState({ keyWord: searchKeyword });
+    if (searchKey && location.pathname === "/movies") {
+      setSearchFormState({ keyWord: searchKey });
     }
   }, []);
 

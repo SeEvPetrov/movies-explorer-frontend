@@ -14,7 +14,7 @@ function Movies({
   isLoading,
   isFailed,
   isNotFound,
-  searchKeyword,
+  searchKey,
   savedMovies,
   onSave,
   onDelete,
@@ -37,7 +37,7 @@ function Movies({
       <section className="movies">
         <SearchForm
           onSubmit={onSubmit}
-          searchKeyword={searchKeyword}
+          searchKey={searchKey}
           onCheckbox={onCheckbox}
           checked={checked}
           checkedSaveMovies={checkedSaveMovies}
@@ -50,7 +50,7 @@ function Movies({
           movies={movies}
           isNotFound={isNotFound}
           isFailed={isFailed}
-          searchKeyword={searchKeyword}
+          searchKey={searchKey}
           savedMovies={savedMovies}
           onSave={onSave}
           onDelete={onDelete}

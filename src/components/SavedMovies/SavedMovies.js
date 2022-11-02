@@ -6,7 +6,21 @@ import MoviesCardList from "../Movies/MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 import "./SavedMovies.css";
 
-function SavedMovies({ isLoading }) {
+function SavedMovies({
+  movies,
+  onSubmit,
+  isLoading,
+  isFailed,
+  isNotFound,
+  searchKey,
+  onCheckbox,
+  checked,
+  checkedSaveMovies,
+  savedMovies,
+  onSave,
+  onDelete,
+  allSavedMovies,
+}) {
   return (
     <>
       <Header
@@ -16,9 +30,28 @@ function SavedMovies({ isLoading }) {
         <MainMovies />
       </Header>
       <section className="movie-saved">
-        <SearchForm />
-        {isLoading && <Preloader />}
-        <MoviesCardList />
+        <SearchForm
+          onSubmit={onSubmit}
+          searchKey={searchKey}
+          onCheckbox={onCheckbox}
+          checked={checked}
+          checkedSaveMovies={checkedSaveMovies}
+        />
+        {isLoading ? (
+          <Preloader />
+        ) : (
+          <MoviesCardList
+            checked={checked}
+            checkedSaveMovies={checkedSaveMovies}
+            movies={movies}
+            isNotFound={isNotFound}
+            isFailed={isFailed}
+            savedMovies={savedMovies}
+            onSave={onSave}
+            onDelete={onDelete}
+            allSavedMovies={allSavedMovies}
+          />
+        )}
       </section>
       <Footer />
     </>

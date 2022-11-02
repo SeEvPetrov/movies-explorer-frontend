@@ -1,19 +1,19 @@
-import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
-import Main from "../Main/Main";
-import Movies from "../Movies/Movies";
-import SavedMovies from "../SavedMovies/SavedMovies";
-import Profile from "../Profile/Profile";
-import Register from "../User/Register/Register";
-import Login from "../User/Login/Login";
-import PageNotFound from "../PageNotFound/PageNotFound";
+import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import Main from '../Main/Main';
+import Movies from '../Movies/Movies';
+import SavedMovies from '../SavedMovies/SavedMovies';
+import Profile from '../Profile/Profile';
+import Register from '../User/Register/Register';
+import Login from '../User/Login/Login';
+import PageNotFound from '../PageNotFound/PageNotFound';
 
-import moviesApi from "../../utils/MoviesApi";
-import mainApi from "../../utils/MainApi";
-import * as auth from "../../utils/Auth";
+import moviesApi from '../../utils/MoviesApi';
+import mainApi from '../../utils/MainApi';
+import * as auth from '../../utils/Auth';
 
-import { CurrentUserContext } from "../../context/CurrentUserContext";
-import "./App.css";
+import { CurrentUserContext } from '../../context/CurrentUserContext';
+import './App.css';
 import {
   BREAKPOINT_1280,
   BREAKPOINT_990,
@@ -25,13 +25,11 @@ import {
   MOVIES_TO_LOAD_2,
   MOVIES_TO_LOAD_3,
   MOVIES_TO_LOAD_4,
-} from "../../utils/constants";
+} from '../../utils/constants';
 
 function App() {
   const navigate = useNavigate();
   const location = useLocation();
-
-  //
 
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
@@ -53,19 +51,19 @@ function App() {
     tokenCheck();
   }, []);
 
-  const onRegister = (name, email, password) => {
+  const handleRegister = (name, email, password) => {
     auth
       .register(name, email, password)
       .then((data) => {
         if (data) {
-          onLogin(email, password);
+          handleLogin(email, password);
         }
       })
       .catch((err) => {
         setErrorMessage(
           err.status !== 400
-            ? "Пользователь с таким email уже зарегистрирован"
-            : "При регистрации произошла ошибка."
+            ? 'Пользователь с таким email уже зарегистрирован'
+            : 'При регистрации произошла ошибка.'
         );
       })
       .finally(() => {
@@ -73,15 +71,15 @@ function App() {
       });
   };
 
-  const onLogin = (email, password) => {
+  const handleLogin = (email, password) => {
     auth
       .authorize(email, password)
       .then((res) => {
         if (res.token) {
-          localStorage.setItem("jwt", res.token);
+          localStorage.setItem('jwt', res.token);
           auth.checkToken(res.token).then((res) => {
             if (res) {
-              setTimeout(() => navigate("/movies"), 300);
+              setTimeout(() => navigate('/movies'), 300);
               setLoggedIn(true);
             }
           });
@@ -89,14 +87,14 @@ function App() {
       })
       .catch((err) => {
         if (err.includes(401)) {
-          setErrorMessage("Вы ввели неправильный логин или пароль.");
+          setErrorMessage('Вы ввели неправильный логин или пароль.');
         }
       });
   };
 
-  const resetErrorText = () => { setTimeout(() => setErrorMessage(''), 10000) };
-
-
+  const resetErrorText = () => {
+    setTimeout(() => setErrorMessage(''), 10000);
+  };
 
   useEffect(() => {
     if (loggedIn) {
@@ -120,21 +118,18 @@ function App() {
         setMovies(JSON.parse(localStorage.getItem('filteredMovies')));
         setChecked(JSON.parse(localStorage.getItem('checkbox')));
         setCheckedSaveMovies(
-          JSON.parse(localStorage.getItem('checkboxSaveMovies'))
+          JSON.parse(localStorage.getItem('checkboxSavedMovies'))
         );
       }
     }
   }, [loggedIn]);
-
-
-
 
   useEffect(() => {
     const handleWindowResize = () => {
       setWindowWidth(window.innerWidth);
     };
 
-    if (location.pathname === "/movies") {
+    if (location.pathname === '/movies') {
       if (windowWidth <= BREAKPOINT_480) {
         setDisplayedMovies(VISIBLE_MOVIES_5);
         setMoviesToLoad(MOVIES_TO_LOAD_2);
@@ -156,9 +151,9 @@ function App() {
       }
     }
 
-    window.addEventListener("resize", handleWindowResize);
+    window.addEventListener('resize', handleWindowResize);
     return () => {
-      window.removeEventListener("resize", handleWindowResize);
+      window.removeEventListener('resize', handleWindowResize);
     };
   }, [windowWidth, location]);
 
@@ -166,9 +161,6 @@ function App() {
     console.log(displayedMovies);
     setDisplayedMovies(displayedMovies + moviesToLoad);
   };
-
-
-  // 
 
   const tokenCheck = () => {
     const jwt = localStorage.getItem('jwt');
@@ -183,7 +175,7 @@ function App() {
           }
         })
         .catch((err) => {
-          onSignOut();
+          handleSignOut();
           console.error(err);
         });
     }
@@ -220,12 +212,12 @@ function App() {
   };
 
   const handleChangeCheckbox = (evt) => {
-    if (location.pathname === "/movies") {
+    if (location.pathname === '/movies') {
       setChecked(!checked);
-      localStorage.setItem("checkbox", !checked);
-    } else if (location.pathname === "/saved-movies") {
+      localStorage.setItem('checkbox', !checked);
+    } else if (location.pathname === '/saved-movies') {
       setCheckedSaveMovies(!checkedSaveMovies);
-      localStorage.setItem("checkboxSaveMovies", !checkedSaveMovies);
+      localStorage.setItem('checkboxSavedMovies', !checkedSaveMovies);
     }
   };
 
@@ -236,43 +228,43 @@ function App() {
   };
 
   const handleSearchMovies = (name) => {
-    if (!JSON.parse(localStorage.getItem("allMovies"))) {
+    if (!JSON.parse(localStorage.getItem('allMovies'))) {
       moviesApi
         .getAllMovies()
         .then((movies) => {
           const before = movies.slice(0, 23);
           const after = movies.slice(24);
           const arrMovies = before.concat(after);
-          localStorage.setItem("allMovies", JSON.stringify(arrMovies));
+          localStorage.setItem('allMovies', JSON.stringify(arrMovies));
         })
         .then(() => {
           setIsLoading(true);
           const searchArr = searchMovies(
-            JSON.parse(localStorage.getItem("allMovies")),
+            JSON.parse(localStorage.getItem('allMovies')),
             name
           );
           setMovies(searchArr);
           setIsNotFound(!movies.length && !isFailed);
-          localStorage.setItem("filteredMovies", JSON.stringify(searchArr));
-          localStorage.setItem("searchKeyword", name);
-          localStorage.setItem("checkbox", checked);
+          localStorage.setItem('filteredMovies', JSON.stringify(searchArr));
+          localStorage.setItem('searchKey', name);
+          localStorage.setItem('checkbox', checked);
           setTimeout(() => setIsLoading(false), 1000);
         })
         .catch((err) => {
           setIsFailed(true);
           console.log(err);
         });
-    } else if (JSON.parse(localStorage.getItem("allMovies"))) {
+    } else if (JSON.parse(localStorage.getItem('allMovies'))) {
       setIsLoading(true);
       const searchArr = searchMovies(
-        JSON.parse(localStorage.getItem("allMovies")),
+        JSON.parse(localStorage.getItem('allMovies')),
         name
       );
       setMovies(searchArr);
       setIsNotFound(!movies.length || !isFailed);
-      localStorage.setItem("filteredMovies", JSON.stringify(searchArr));
-      localStorage.setItem("searchKeyword", name);
-      localStorage.setItem("checkbox", checked);
+      localStorage.setItem('filteredMovies', JSON.stringify(searchArr));
+      localStorage.setItem('searchKey', name);
+      localStorage.setItem('checkbox', checked);
       setTimeout(() => setIsLoading(false), 1000);
     }
   };
@@ -283,7 +275,7 @@ function App() {
       .getSavedMovies()
       .then((movies) => {
         setAllSavedMovies(movies);
-        localStorage.setItem("checkboxSaveMovies", checkedSaveMovies);
+        localStorage.setItem('checkboxSavedMovies', checkedSaveMovies);
         const userSavedMovies = movies.filter((movie) => {
           return movie.owner === currentUser._id;
         });
@@ -301,8 +293,8 @@ function App() {
     setTimeout(() => setIsLoading(false), 1000);
   };
 
-  // const onUpdateUser = (name, email) => {
-  //   apiAuth
+  // const handleUpdateUser = (name, email) => {
+  //   auth
   //     .updateUserInfo(name, email)
   //     .then((data) => {
   //       setIsMessageProfile(true);
@@ -316,12 +308,32 @@ function App() {
   //     });
   // };
 
-  const onSignOut = () => {
+    const handleUpdateUser = (name, email) => {
+    auth
+      .updateUserInfo(name, email)
+      .then((data) => {
+        setCurrentUser(data);
+        setErrorMessage('Изменение данных прошло успешно!');
+      })
+      .catch((err) => {
+        setErrorMessage(
+          err.status !== 400
+            ? 'Пользователь с таким email уже зарегистрирован'
+            : 'При обновлении профиля произошла ошибка.'
+        );
+        console.error(err);
+      })
+      .finally(() => {
+        resetErrorText();
+      });
+  };
+
+  const handleSignOut = () => {
     localStorage.clear();
-    navigate("/");
+    navigate('/');
     setLoggedIn(false);
     setCurrentUser({});
-    setErrorMessage("");
+    setErrorMessage('');
     setIsLoading(false);
     setIsFailed(false);
     setMovies([]);
@@ -331,58 +343,81 @@ function App() {
     setIsNotFound(false);
   };
 
-  //
-
   return (
     <CurrentUserContext.Provider value={currentUser}>
-    <div className="app">
-      <Routes>
-        <Route path="/" element={<Main loggedIn={loggedIn}/>}></Route>
-        <Route
-          path="/movies"
-          element={
-            <Movies
-              displayedMovies={displayedMovies}
-              onSubmit={handleSearchMovies}
-              movies={movies}
-              isLoading={isLoading}
-              isFailed={isFailed}
-              isNotFound={isNotFound}
-              searchKeyword={localStorage.getItem("searchKeyword")}
-              onCheckbox={handleChangeCheckbox}
-              checked={checked}
-              checkedSaveMovies={checkedSaveMovies}
-              savedMovies={savedMovies}
-              onSave={handleSaveMovie}
-              onDelete={handleDeleteMovie}
-              allSavedMovies={allSavedMovies}
-              handleShowMoreMovies={handleShowMoreMovies}
-            />
-          }
-        ></Route>
-        <Route
-          path="/saved-movies"
-          element={<SavedMovies isLoading={false} />}
-        ></Route>
-        <Route path="/profile" element={<Profile />}></Route>
-        <Route
-          path="/signup"
-          element={
-            <Register errorMessage={errorMessage} onRegister={onRegister} />
-          }
-        ></Route>
-        <Route
-          path="/signin"
-          element={
-            <Login
-              onLogin={onLogin}
-              errorMessage={errorMessage}
-            />
-          }
-        ></Route>
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
-    </div>
+      <div className='app'>
+        <Routes>
+          <Route path='/' element={<Main loggedIn={loggedIn} />}></Route>
+          <Route
+            path='/movies'
+            element={
+              <Movies
+                displayedMovies={displayedMovies}
+                onSubmit={handleSearchMovies}
+                movies={movies}
+                isLoading={isLoading}
+                isFailed={isFailed}
+                isNotFound={isNotFound}
+                searchKey={localStorage.getItem('searchKey')}
+                onCheckbox={handleChangeCheckbox}
+                checked={checked}
+                checkedSaveMovies={checkedSaveMovies}
+                savedMovies={savedMovies}
+                onSave={handleSaveMovie}
+                onDelete={handleDeleteMovie}
+                allSavedMovies={allSavedMovies}
+                handleShowMoreMovies={handleShowMoreMovies}
+              />
+            }
+          ></Route>
+          <Route
+            path='/saved-movies'
+            element={
+              <SavedMovies
+                onSubmit={handleSearchSavedMovies}
+                movies={movies}
+                isLoading={isLoading}
+                isFailed={isFailed}
+                isNotFound={isNotFound}
+                searchKey={localStorage.getItem('searchKey')}
+                onCheckbox={handleChangeCheckbox}
+                checked={checked}
+                checkedSaveMovies={checkedSaveMovies}
+                savedMovies={savedMovies}
+                onSave={handleSaveMovie}
+                onDelete={handleDeleteMovie}
+                allSavedMovies={allSavedMovies}
+              />
+            }
+          ></Route>
+          <Route
+            path='/profile'
+            element={
+              <Profile
+                onSignOut={handleSignOut}
+                onUpdateUser={handleUpdateUser}
+                errorMessage={errorMessage}
+              />
+            }
+          ></Route>
+          <Route
+            path='/signup'
+            element={
+              <Register
+                errorMessage={errorMessage}
+                onRegister={handleRegister}
+              />
+            }
+          ></Route>
+          <Route
+            path='/signin'
+            element={
+              <Login onLogin={handleLogin} errorMessage={errorMessage} />
+            }
+          ></Route>
+          <Route path='*' element={<PageNotFound />} />
+        </Routes>
+      </div>
     </CurrentUserContext.Provider>
   );
 }
