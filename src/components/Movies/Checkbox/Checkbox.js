@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import "./Checkbox.css";
 
-function Checkbox({ onCheckbox, checked, checkedSaveMovies }) {
+function Checkbox({ onCheckbox, checked, checkedSavedMovies }) {
   const location = useLocation();
   const handleCheckbox = (evt) => {
     onCheckbox(evt.target.checked);
@@ -26,7 +26,7 @@ function Checkbox({ onCheckbox, checked, checkedSaveMovies }) {
           id="custom-checkbox"
           name="custom-checkbox"
           defaultValue="yes"
-          checked={checkedSaveMovies}
+          checked={checkedSavedMovies}
           onChange={handleCheckbox}
         />
       )}

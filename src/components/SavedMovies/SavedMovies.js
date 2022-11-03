@@ -36,7 +36,7 @@ function SavedMovies({
           searchKey={searchKey}
           onCheckbox={onCheckbox}
           checked={checked}
-          checkedSaveMovies={checkedSavedMovies}
+          checkedSavedMovies={checkedSavedMovies}
         />
         {preloader ? (
           <Preloader />
@@ -44,7 +44,7 @@ function SavedMovies({
           <MoviesCardList
             displayedMovies={displayedMovies}
             checked={checked}
-            checkedSaveMovies={checkedSavedMovies}
+            checkedSavedMovies={checkedSavedMovies}
             movies={movies}
             notFoundMovies={notFoundMovies}
             isFailed={isFailed}

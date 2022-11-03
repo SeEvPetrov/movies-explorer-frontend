@@ -8,7 +8,7 @@ function SearchForm({
   searchKey,
   onCheckbox,
   checked,
-  checkedSaveMovies,
+  checkedSavedMovies,
 }) {
   const location = useLocation();
   const [searchFormState, setSearchFormState] = useState({
@@ -76,7 +76,7 @@ function SearchForm({
         <Checkbox
           onCheckbox={onCheckbox}
           checked={checked}
-          checkedSaveMovies={checkedSaveMovies}
+          checkedSavedMovies={checkedSavedMovies}
         />
       </div>
     </div>
