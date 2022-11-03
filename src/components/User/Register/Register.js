@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 function Register({ onRegister, errorMessage }) {
   const checkInput = useFormWithValidation();
   const { name, email, password } = checkInput.errors;
-  
-console.log(errorMessage);
+  const { textError } = errorMessage;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const { name, email, password } = checkInput.values;
@@ -44,7 +44,13 @@ console.log(errorMessage);
                 value={checkInput?.values?.name || ""}
                 required
               />
-              <span className={`error__input ${!checkInput.isValid && "error__input_visible"}`}>{name}</span>
+              <span
+                className={`error__input ${
+                  !checkInput.isValid && "error__input_visible"
+                }`}
+              >
+                {name}
+              </span>
             </label>
             <label className="auth__input-container">
               <span className="auth__label">E-mail</span>
@@ -56,12 +62,18 @@ console.log(errorMessage);
                 autoComplete="off"
                 minLength="2"
                 maxLength="30"
-                pattern='^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
+                pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
                 onChange={checkInput.handleChange}
                 value={checkInput?.values?.email || ""}
                 required
               />
-              <span className={`error__input ${!checkInput.isValid && "error__input_visible"}`}>{email}</span>
+              <span
+                className={`error__input ${
+                  !checkInput.isValid && "error__input_visible"
+                }`}
+              >
+                {email}
+              </span>
             </label>
             <label className="auth__input-container">
               <span className="auth__label">Пароль</span>
@@ -77,16 +89,24 @@ console.log(errorMessage);
                 value={checkInput?.values?.password || ""}
                 required
               />
-              <span className={`error__input ${!checkInput.isValid && "error__input_visible"}`}>{password}</span>
+              <span
+                className={`error__input ${
+                  !checkInput.isValid && "error__input_visible"
+                }`}
+              >
+                {password}
+              </span>
             </label>
-            <span className="error__res">{errorMessage}</span>
-            <button
-              type="submit"
-              className="auth__submit-btn auth__submit-btn_register"
-              disabled={!checkInput.isValid}
-            >
-              Зарегистрироваться
-            </button>
+            <div className="auth__btn-container auth__btn-container_register">
+              <span className="error__res">{textError}</span>
+              <button
+                type="submit"
+                className="auth__submit-btn auth__submit-btn_register"
+                disabled={!checkInput.isValid}
+              >
+                Зарегистрироваться
+              </button>
+            </div>
           </fieldset>
         </form>
         <div className="auth__question">

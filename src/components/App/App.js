@@ -33,7 +33,10 @@ function App() {
 
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState({
+    textError: '',
+    isError: null,
+  });
   const [moviesToLoad, setMoviesToLoad] = useState(0);
   const [displayedMovies, setDisplayedMovies] = useState(0);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -106,11 +109,12 @@ function App() {
         }
       })
       .catch((err) => {
-        setErrorMessage(
-          err.status !== 400
-            ? "Пользователь с таким email уже зарегистрирован"
-            : "При регистрации произошла ошибка."
-        );
+        setErrorMessage({
+          textError: err.status !== 400
+          ? "Пользователь с таким email уже зарегистрирован"
+          : "При регистрации произошла ошибка.",
+          isError: true
+        });
       })
       .finally(() => {
         resetErrorText();
@@ -133,13 +137,19 @@ function App() {
       })
       .catch((err) => {
         if (err.includes(401)) {
-          setErrorMessage("Вы ввели неправильный логин или пароль.");
+          setErrorMessage({
+            textError: "Вы ввели неправильный логин или пароль.",
+            isError: true
+          });
         }
       });
   };
 
   const resetErrorText = () => {
-    setTimeout(() => setErrorMessage(""), 10000);
+    setTimeout(() => setErrorMessage({
+      textError: '',
+      isError: null,
+    }), 10000);
   };
 
   useEffect(() => {
@@ -280,11 +290,11 @@ function App() {
     mainApi
       .deleteMovie(savedMovie._id)
       .then(() => {
-        const newMoviesList = savedMovies.filter(
+        const newSavedMovies = savedMovies.filter(
           (item) => item._id !== savedMovie._id
         );
 
-        setSavedMovies(newMoviesList);
+        setSavedMovies(newSavedMovies);
       })
       .catch((err) => {
         console.log(err);
@@ -296,14 +306,19 @@ function App() {
       .updateUserInfo(name, email)
       .then((data) => {
         setCurrentUser(data);
-        setErrorMessage("Изменение данных прошло успешно!");
+        setErrorMessage({
+          textError: "Изменение данных прошло успешно!",
+          isError: false,
+        });
       })
       .catch((err) => {
         setErrorMessage(
-          err.status !== 400
+          {
+            textError: err.status !== 400
             ? "Пользователь с таким email уже зарегистрирован"
-            : "При обновлении профиля произошла ошибка."
-        );
+            : "При обновлении профиля произошла ошибка.",
+            isError: true
+          });
         console.error(err);
       })
       .finally(() => {
@@ -316,7 +331,10 @@ function App() {
     navigate("/");
     setLoggedIn(false);
     setCurrentUser({});
-    setErrorMessage("");
+    setErrorMessage({
+      textError: '',
+      isError: null,
+    });
     setIsLoading(false);
     setIsFailed(false);
     setMovies([]);

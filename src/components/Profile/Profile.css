@@ -89,6 +89,10 @@
   color: #ee3465;
 }
 
+.profile__res_success {
+  color: #dceae0;
+}
+
 .profile__btns {
   display: flex;
   flex-direction: column;

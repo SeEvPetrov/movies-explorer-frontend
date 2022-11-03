@@ -11,6 +11,7 @@ function Profile({ onSignOut, onUpdateUser, errorMessage }) {
   const [isUnlockedInput, setIsUnlockedInput] = useState(true);
   const checkInput = useFormWithValidation();
   const { name, email } = checkInput.errors;
+  const { textError, isError } = errorMessage;
 
   const switchStateInput = (e) => {
     e.preventDefault();
@@ -98,7 +99,7 @@ function Profile({ onSignOut, onUpdateUser, errorMessage }) {
             </label>
             {!isUnlockedInput && (
                 <div className='save__container'>
-                  <span className='profile__res'>{errorMessage}</span>
+                  <span className={`profile__res ${!isError && 'profile__res_success'}`}>{textError}</span>
                   <button
                     className='profile__btn_save'
                     disabled={disableSavedBtn || !checkInput.isValid}
