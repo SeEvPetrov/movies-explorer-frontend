@@ -7,6 +7,7 @@ import Profile from "../Profile/Profile";
 import Register from "../User/Register/Register";
 import Login from "../User/Login/Login";
 import PageNotFound from "../PageNotFound/PageNotFound";
+import ProtectedRoute from "../ProtectedRoute";
 
 import * as auth from "../../utils/Auth";
 import mainApi from "../../utils/MainApi";
@@ -366,10 +367,23 @@ function App() {
               <Login onLogin={handleLogin} errorMessage={errorMessage} />
             }
           ></Route>
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute loggedIn={loggedIn}>
+              <Profile
+                onSignOut={handleSignOut}
+                onUpdateUser={handleUpdateUser}
+                errorMessage={errorMessage}
+              />
+              </ProtectedRoute>
+            }
+          ></Route>
           <Route path="/" element={<Main loggedIn={loggedIn} />}></Route>
           <Route
             path="/movies"
             element={
+              <ProtectedRoute loggedIn={loggedIn}>
               <Movies
                 displayedMovies={displayedMovies}
                 onSubmit={handleSearchMovies}
@@ -387,11 +401,13 @@ function App() {
                 allSavedMovies={allSavedMovies}
                 handleShowMoreMovies={handleShowMoreMovies}
               />
+              </ProtectedRoute>
             }
           ></Route>
           <Route
             path="/saved-movies"
             element={
+              <ProtectedRoute loggedIn={loggedIn}>
               <SavedMovies
                 onSubmit={handleSearchSavedMovies}
                 movies={movies}
@@ -407,16 +423,7 @@ function App() {
                 onDelete={handleDeleteMovie}
                 allSavedMovies={allSavedMovies}
               />
-            }
-          ></Route>
-          <Route
-            path="/profile"
-            element={
-              <Profile
-                onSignOut={handleSignOut}
-                onUpdateUser={handleUpdateUser}
-                errorMessage={errorMessage}
-              />
+              </ProtectedRoute>
             }
           ></Route>
           <Route path="*" element={<PageNotFound />} />
