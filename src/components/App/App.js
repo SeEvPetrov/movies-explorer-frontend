@@ -45,6 +45,8 @@ function App() {
   const [checkedSaveMovies, setCheckedSaveMovies] = useState(true);
   const [isNotFound, setIsNotFound] = useState(false);
   const [allSavedMovies, setAllSavedMovies] = useState([]);
+  const [isShortSavedMovies, setIsShortSavedMovies] = useState([]);
+  const [isCollectionSavedArray, setIsCollectionSavedArray] = useState([]);
 
   useEffect(() => {
     tokenCheck();
@@ -176,7 +178,6 @@ function App() {
   }, [windowWidth, location]);
 
   const handleShowMoreMovies = () => {
-    console.log(displayedMovies);
     setDisplayedMovies(displayedMovies + moviesToLoad);
   };
 
@@ -231,9 +232,9 @@ function App() {
       moviesApi
         .getAllMovies()
         .then((movies) => {
-          const before = movies.slice(0, 23);
-          const after = movies.slice(24);
-          const arrMovies = before.concat(after);
+          const beforeMovie = movies.slice(0, 23);
+          const afterMovie = movies.slice(24);
+          const arrMovies = beforeMovie.concat(afterMovie);
           localStorage.setItem("allMovies", JSON.stringify(arrMovies));
         })
         .then(() => {
@@ -331,7 +332,7 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">
         <Routes>
-        <Route
+          <Route
             path="/signup"
             element={
               <Register

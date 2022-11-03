@@ -20,6 +20,7 @@ function SavedMovies({
   onSave,
   onDelete,
   allSavedMovies,
+  displayedMovies,
 }) {
   return (
     <>
@@ -41,6 +42,7 @@ function SavedMovies({
           <Preloader />
         ) : (
           <MoviesCardList
+            displayedMovies={displayedMovies}
             checked={checked}
             checkedSaveMovies={checkedSaveMovies}
             movies={movies}

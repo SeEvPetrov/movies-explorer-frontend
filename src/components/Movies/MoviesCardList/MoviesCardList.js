@@ -1,4 +1,5 @@
 import "./MoviesCardList.css";
+import { useState, useEffect } from "react";
 import MovieCard from "../MoviesCard/MovieCard";
 import { useLocation } from "react-router-dom";
 
@@ -17,31 +18,31 @@ function MoviesCardList({
 }) {
   const location = useLocation();
   let moviesPage = location.pathname === "/movies";
+  const [isMoreButton, setMoreButton] = useState(false);
+
+  useEffect(() => {
+    movies.length > displayedMovies
+      ? setMoreButton(true)
+      : setMoreButton(false);
+  }, [movies.length, displayedMovies]);
 
   const searchShortMovies = (movies) => {
-    const searchShortMoviesArr = movies.slice(0);
-    return searchShortMoviesArr.filter((item) => item.duration <= 40);
+    const resultShortMoviesArr = movies.slice(0);
+    return resultShortMoviesArr.filter((item) => item.duration <= 40);
   };
 
-  let saveMoviesFilterArr = !checkedSaveMovies
+  let saveMoviesArr = !checkedSaveMovies
     ? searchShortMovies(savedMovies)
     : savedMovies;
 
-  let moviesFilterArr = !checked ? searchShortMovies(movies) : movies;
-
-  let buttonMoreClass =
-    !(movies.length > 4) ||
-    displayedMovies >= movies.length ||
-    displayedMovies >= moviesFilterArr.length
-      ? "movie-cards__button_hidden"
-      : "movie-cards__button";
+  let moviesArr = !checked ? searchShortMovies(movies) : movies;
 
   return (
     <div className="movies-cards">
       {moviesPage ? (
         <>
           <ul className="movies-cards__list">
-            {moviesFilterArr.slice(0, displayedMovies).map((card) => {
+            {moviesArr.slice(0, displayedMovies).map((card) => {
               return (
                 <MovieCard
                   key={card.id}
@@ -58,14 +59,20 @@ function MoviesCardList({
               );
             })}
           </ul>
-          <button type="button" className={buttonMoreClass} onClick={handleShowMoreMovies}>
+          <button
+            type="button"
+            className={`movie-cards__button ${
+              !isMoreButton && "movie-cards__button_hidden"
+            }`}
+            onClick={handleShowMoreMovies}
+          >
             Ещё
           </button>
         </>
       ) : (
         <>
           <ul className="movies-cards__list">
-            {saveMoviesFilterArr.map((card) => {
+            {saveMoviesArr.map((card) => {
               return (
                 <MovieCard
                   key={card._id}
