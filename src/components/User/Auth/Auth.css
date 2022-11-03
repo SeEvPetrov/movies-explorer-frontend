@@ -101,6 +101,10 @@
   margin-top: 69px;
 }
 
+.auth__btn-container_login {
+  margin-top: 179px;
+}
+
 .auth__submit-btn {
   width: 100%;
   margin-top: 5px;
@@ -121,14 +125,6 @@
   color: #c2c2c2;
   background: #f8f8f8;
   pointer-events: none;
-}
-/* 
-.auth__submit-btn_register {
-  margin-top: 69px;
-} */
-
-.auth__submit-btn_login {
-  margin-top: 179px;
 }
 
 .auth__submit-btn:hover {
@@ -188,7 +184,7 @@
   .auth__btn-container_register {
     margin-top: 157px;
   }
-  .auth__submit-btn_login {
+  .auth__btn-container_login {
     margin-top: 267px;
   }
   .auth__question {

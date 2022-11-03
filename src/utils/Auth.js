@@ -1,13 +1,13 @@
-export const BASE_URL = 'https://api.movies.petrov.nomoredomains.icu';
+export const BASE_URL = "https://api.movies.petrov.nomoredomains.icu";
 const checkResponse = (res) => {
   return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
 };
 
 export const register = (name, email, password) => {
   return fetch(`${BASE_URL}/signup`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       name: name,
@@ -19,9 +19,9 @@ export const register = (name, email, password) => {
 
 export const authorize = (email, password) => {
   return fetch(`${BASE_URL}/signin`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       email: email,
@@ -32,10 +32,10 @@ export const authorize = (email, password) => {
 
 export const updateUserInfo = (name, email) => {
   return fetch(`${BASE_URL}/users/me`, {
-    method: 'PATCH',
+    method: "PATCH",
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("jwt")}`,
     },
     body: JSON.stringify({
       name: name,
@@ -47,17 +47,17 @@ export const updateUserInfo = (name, email) => {
 export const getUserInfo = () => {
   return fetch(`${BASE_URL}/users/me`, {
     headers: {
-      'Content-type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+      "Content-type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("jwt")}`,
     },
   }).then(checkResponse);
 };
 
 export const checkToken = (token) => {
   return fetch(`${BASE_URL}/users/me`, {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
   }).then(checkResponse);

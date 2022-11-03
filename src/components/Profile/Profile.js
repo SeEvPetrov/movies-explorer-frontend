@@ -1,10 +1,10 @@
-import Header from '../Header/Header';
-import MainMovies from '../Header/MoviesHeader/MoviesHeader';
-import { useState, useContext } from 'react';
-import { useFormWithValidation } from '../../hooks/useFormWithValidation';
-import { CurrentUserContext } from '../../context/CurrentUserContext';
-import './Profile.css';
-import '../User/Auth/Auth.css';
+import Header from "../Header/Header";
+import MainMovies from "../Header/MoviesHeader/MoviesHeader";
+import { useState, useContext } from "react";
+import { useFormWithValidation } from "../../hooks/useFormWithValidation";
+import { CurrentUserContext } from "../../context/CurrentUserContext";
+import "./Profile.css";
+import "../User/Auth/Auth.css";
 
 function Profile({ onSignOut, onUpdateUser, errorMessage }) {
   const currentUser = useContext(CurrentUserContext);
@@ -20,9 +20,9 @@ function Profile({ onSignOut, onUpdateUser, errorMessage }) {
 
   let disableSavedBtn =
     (currentUser.name === checkInput?.values?.name &&
-      typeof checkInput?.values?.email === 'undefined') ||
+      typeof checkInput?.values?.email === "undefined") ||
     (currentUser.email === checkInput?.values?.email &&
-      typeof checkInput?.values?.email === 'undefined');
+      typeof checkInput?.values?.email === "undefined");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -41,25 +41,25 @@ function Profile({ onSignOut, onUpdateUser, errorMessage }) {
   return (
     <>
       <Header
-        color={'header__theme_black'}
-        location={'header__container_movies'}
+        color={"header__theme_black"}
+        location={"header__container_movies"}
       >
         <MainMovies />
       </Header>
-      <section className='profile'>
-        <div className='profile__container'>
-          <h2 className='profile__title'>Привет, {currentUser.name}!</h2>
-          <form className='profile__form' onSubmit={handleSubmit}>
-            <label className='profile__label'>
-              <p className='profile__label-title'>Имя</p>
+      <section className="profile">
+        <div className="profile__container">
+          <h2 className="profile__title">Привет, {currentUser.name}!</h2>
+          <form className="profile__form" onSubmit={handleSubmit}>
+            <label className="profile__label">
+              <p className="profile__label-title">Имя</p>
               <input
-                type='text'
+                type="text"
                 placeholder={currentUser.name}
-                className='profile__label_input'
-                minLength='2'
-                maxLength='30'
-                name='name'
-                pattern='[A-Za-zА-Яа-яЁё\s-]+'
+                className="profile__label_input"
+                minLength="2"
+                maxLength="30"
+                name="name"
+                pattern="[A-Za-zА-Яа-яЁё\s-]+"
                 onChange={checkInput.handleChange}
                 value={checkInput?.values?.name ?? currentUser.name}
                 {...(!isUnlockedInput ? {} : { disabled: true })}
@@ -67,22 +67,22 @@ function Profile({ onSignOut, onUpdateUser, errorMessage }) {
               />
               <span
                 className={`profile__error__input ${
-                  !checkInput.isValid && 'profile__error__input_visible'
+                  !checkInput.isValid && "profile__error__input_visible"
                 }`}
               >
                 {name}
               </span>
             </label>
-            <label className='profile__label'>
-              <p className='profile__label-title'>E-mail</p>
+            <label className="profile__label">
+              <p className="profile__label-title">E-mail</p>
               <input
-                type='email'
+                type="email"
                 placeholder={currentUser.email}
-                className='profile__label_input'
-                minLength='4'
-                maxLength='30'
-                name='email'
-                pattern='^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
+                className="profile__label_input"
+                minLength="4"
+                maxLength="30"
+                name="email"
+                pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
                 onChange={checkInput.handleChange}
                 value={checkInput?.values?.email ?? currentUser.email}
                 {...(!isUnlockedInput ? {} : { disabled: true })}
@@ -90,32 +90,45 @@ function Profile({ onSignOut, onUpdateUser, errorMessage }) {
               />
               <span
                 className={`profile__error__input ${
-                  !checkInput.isValid && 'profile__error__input_visible'
+                  !checkInput.isValid && "profile__error__input_visible"
                 }`}
               >
                 {email}
               </span>
-              
             </label>
             {!isUnlockedInput && (
-                <div className='save__container'>
-                  <span className={`profile__res ${!isError && 'profile__res_success'}`}>{textError}</span>
-                  <button
-                    className='profile__btn_save'
-                    disabled={disableSavedBtn || !checkInput.isValid}
-                  >
-                    Сохранить
-                  </button>
-                </div>
-              )}
+              <div className="save__container">
+                <span
+                  className={`profile__res ${
+                    !isError && "profile__res_success"
+                  }`}
+                >
+                  {textError}
+                </span>
+                <button
+                  className="profile__btn_save"
+                  disabled={disableSavedBtn || !checkInput.isValid}
+                >
+                  Сохранить
+                </button>
+              </div>
+            )}
           </form>
-          
+
           {isUnlockedInput && (
-            <div className='profile__btns'>
-              <button type='submit' className='profile__btn_edit' onClick={switchStateInput}>
+            <div className="profile__btns">
+              <button
+                type="submit"
+                className="profile__btn_edit"
+                onClick={switchStateInput}
+              >
                 Редактировать
               </button>
-              <button type='submit' className='profile__btn_out' onClick={onSignOut}>
+              <button
+                type="submit"
+                className="profile__btn_out"
+                onClick={onSignOut}
+              >
                 Выйти из аккаунта
               </button>
             </div>

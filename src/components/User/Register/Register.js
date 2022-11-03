@@ -101,7 +101,7 @@ function Register({ onRegister, errorMessage }) {
               <span className="error__res">{textError}</span>
               <button
                 type="submit"
-                className="auth__submit-btn auth__submit-btn_register"
+                className="auth__submit-btn"
                 disabled={!checkInput.isValid}
               >
                 Зарегистрироваться

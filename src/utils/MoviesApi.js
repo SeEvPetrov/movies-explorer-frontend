@@ -14,14 +14,14 @@ class MoviesApi {
   getAllMovies() {
     return fetch(`${this._url}`, {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     }).then((res) => this.checkError(res));
   }
 }
 
 const moviesApi = new MoviesApi({
-  url: 'https://api.nomoreparties.co/beatfilm-movies',
+  url: "https://api.nomoreparties.co/beatfilm-movies",
 });
 
 export default moviesApi;

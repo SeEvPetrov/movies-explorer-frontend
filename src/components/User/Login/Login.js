@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 function Login({ onLogin, errorMessage }) {
   const checkInput = useFormWithValidation();
   const { email, password } = checkInput.errors;
+  const { textError } = errorMessage;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -72,14 +73,16 @@ function Login({ onLogin, errorMessage }) {
                 {password}
               </span>
             </label>
-            <span className="error__res">{errorMessage}</span>
+            <div className="auth__btn-container auth__btn-container_login">
+            <span className="error__res">{textError}</span>
             <button
               type="submit"
-              className="auth__submit-btn auth__submit-btn_login"
+              className="auth__submit-btn"
               disabled={!checkInput.isValid}
             >
               Войти
             </button>
+            </div>
           </fieldset>
         </form>
         <div className="auth__question">

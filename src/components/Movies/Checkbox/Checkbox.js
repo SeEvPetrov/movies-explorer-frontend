@@ -9,25 +9,25 @@ function Checkbox({ onCheckbox, checked, checkedSaveMovies }) {
 
   return (
     <div className="checkbox checkbox__container">
-      {location.pathname === '/movies' ? (
-      <input
-        type="checkbox"
-        className="custom-checkbox"
-        id="custom-checkbox"
-        name="custom-checkbox"
-        defaultValue="yes"
-        checked={checked}
-        onChange={handleCheckbox}
-      />
+      {location.pathname === "/movies" ? (
+        <input
+          type="checkbox"
+          className="custom-checkbox"
+          id="custom-checkbox"
+          name="custom-checkbox"
+          defaultValue="yes"
+          checked={checked}
+          onChange={handleCheckbox}
+        />
       ) : (
         <input
-        type="checkbox"
-        className="custom-checkbox"
-        id="custom-checkbox"
-        name="custom-checkbox"
-        defaultValue="yes"
-        checked={checkedSaveMovies}
-        onChange={handleCheckbox}
+          type="checkbox"
+          className="custom-checkbox"
+          id="custom-checkbox"
+          name="custom-checkbox"
+          defaultValue="yes"
+          checked={checkedSaveMovies}
+          onChange={handleCheckbox}
         />
       )}
       <label htmlFor="custom-checkbox"></label>

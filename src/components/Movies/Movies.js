@@ -10,20 +10,19 @@ function Movies({
   displayedMovies,
   onSubmit,
   movies,
-  isLoading,
+  preloader,
   isFailed,
-  isNotFound,
+  notFoundMovies,
   searchKey,
   savedMovies,
   onSave,
   onDelete,
   onCheckbox,
   checked,
-  checkedSaveMovies,
+  checkedSavedMovies,
   allSavedMovies,
   handleShowMoreMovies,
 }) {
-
   return (
     <>
       <Header
@@ -38,25 +37,25 @@ function Movies({
           searchKey={searchKey}
           onCheckbox={onCheckbox}
           checked={checked}
-          checkedSaveMovies={checkedSaveMovies}
+          checkedSavedMovies={checkedSavedMovies}
         />
-       {isLoading ? (
+        {preloader ? (
           <Preloader />
         ) : (
-        <MoviesCardList
-          displayedMovies={displayedMovies}
-          movies={movies}
-          isNotFound={isNotFound}
-          isFailed={isFailed}
-          searchKey={searchKey}
-          savedMovies={savedMovies}
-          onSave={onSave}
-          onDelete={onDelete}
-          checked={checked}
-          checkedSaveMovies={checkedSaveMovies}
-          allSavedMovies={allSavedMovies}
-          handleShowMoreMovies={handleShowMoreMovies}
-        />
+          <MoviesCardList
+            displayedMovies={displayedMovies}
+            movies={movies}
+            notFoundMovies={notFoundMovies}
+            isFailed={isFailed}
+            searchKey={searchKey}
+            savedMovies={savedMovies}
+            onSave={onSave}
+            onDelete={onDelete}
+            checked={checked}
+            checkedSavedMovies={checkedSavedMovies}
+            allSavedMovies={allSavedMovies}
+            handleShowMoreMovies={handleShowMoreMovies}
+          />
         )}
         <Footer />
       </section>

@@ -34,7 +34,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
   const [errorMessage, setErrorMessage] = useState({
-    textError: '',
+    textError: "",
     isError: null,
   });
   const [moviesToLoad, setMoviesToLoad] = useState(0);
@@ -42,11 +42,11 @@ function App() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [movies, setMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [preloader, setPreloader] = useState(false);
   const [isFailed, setIsFailed] = useState(false);
   const [checked, setChecked] = useState(true);
-  const [checkedSaveMovies, setCheckedSaveMovies] = useState(true);
-  const [isNotFound, setIsNotFound] = useState(false);
+  const [checkedSavedMovies, setCheckedSavedMovies] = useState(true);
+  const [notFoundMovies, setNotFoundMovies] = useState(false);
   const [allSavedMovies, setAllSavedMovies] = useState([]);
 
   useEffect(() => {
@@ -74,7 +74,7 @@ function App() {
       if (JSON.parse(localStorage.getItem("filteredMovies"))) {
         setMovies(JSON.parse(localStorage.getItem("filteredMovies")));
         setChecked(JSON.parse(localStorage.getItem("checkbox")));
-        setCheckedSaveMovies(
+        setCheckedSavedMovies(
           JSON.parse(localStorage.getItem("checkboxSavedMovies"))
         );
       }
@@ -110,10 +110,11 @@ function App() {
       })
       .catch((err) => {
         setErrorMessage({
-          textError: err.status !== 400
-          ? "Пользователь с таким email уже зарегистрирован"
-          : "При регистрации произошла ошибка.",
-          isError: true
+          textError:
+            err.status !== 400
+              ? "Пользователь с таким email уже зарегистрирован"
+              : "При регистрации произошла ошибка.",
+          isError: true,
         });
       })
       .finally(() => {
@@ -139,17 +140,21 @@ function App() {
         if (err.includes(401)) {
           setErrorMessage({
             textError: "Вы ввели неправильный логин или пароль.",
-            isError: true
+            isError: true,
           });
         }
       });
   };
 
   const resetErrorText = () => {
-    setTimeout(() => setErrorMessage({
-      textError: '',
-      isError: null,
-    }), 10000);
+    setTimeout(
+      () =>
+        setErrorMessage({
+          textError: "",
+          isError: null,
+        }),
+      10000
+    );
   };
 
   useEffect(() => {
@@ -191,7 +196,7 @@ function App() {
 
   const handleSaveMovie = (movie) => {
     mainApi
-      .addMovie(movie)
+      .createMovie(movie)
       .then((data) => {
         setSavedMovies([data, ...savedMovies]);
       })
@@ -205,8 +210,8 @@ function App() {
       setChecked(!checked);
       localStorage.setItem("checkbox", !checked);
     } else if (location.pathname === "/saved-movies") {
-      setCheckedSaveMovies(!checkedSaveMovies);
-      localStorage.setItem("checkboxSavedMovies", !checkedSaveMovies);
+      setCheckedSavedMovies(!checkedSavedMovies);
+      localStorage.setItem("checkboxSavedMovies", !checkedSavedMovies);
     }
   };
 
@@ -227,59 +232,59 @@ function App() {
           localStorage.setItem("allMovies", JSON.stringify(arrMovies));
         })
         .then(() => {
-          setIsLoading(true);
+          setPreloader(true);
           const resultArray = searchMovies(
             JSON.parse(localStorage.getItem("allMovies")),
             name
           );
           setMovies(resultArray);
-          setIsNotFound(!movies.length && !isFailed);
+          setNotFoundMovies(!movies.length && !isFailed);
           localStorage.setItem("filteredMovies", JSON.stringify(resultArray));
           localStorage.setItem("searchKey", name);
           localStorage.setItem("checkbox", checked);
-          setTimeout(() => setIsLoading(false), 1000);
+          setTimeout(() => setPreloader(false), 1000);
         })
         .catch((err) => {
           setIsFailed(true);
           console.log(err);
         });
     } else if (JSON.parse(localStorage.getItem("allMovies"))) {
-      setIsLoading(true);
+      setPreloader(true);
       const resultArray = searchMovies(
         JSON.parse(localStorage.getItem("allMovies")),
         name
       );
       setMovies(resultArray);
-      setIsNotFound(!movies.length || !isFailed);
+      setNotFoundMovies(!movies.length || !isFailed);
       localStorage.setItem("filteredMovies", JSON.stringify(resultArray));
       localStorage.setItem("searchKey", name);
       localStorage.setItem("checkbox", checked);
-      setTimeout(() => setIsLoading(false), 1000);
+      setTimeout(() => setPreloader(false), 1000);
     }
   };
 
   const handleSearchSavedMovies = (name) => {
-    setIsLoading(true);
+    setPreloader(true);
     mainApi
       .getSavedMovies()
       .then((movies) => {
         setAllSavedMovies(movies);
-        localStorage.setItem("checkboxSavedMovies", checkedSaveMovies);
+        localStorage.setItem("checkboxSavedMovies", checkedSavedMovies);
         const userSavedMovies = movies.filter((movie) => {
           return movie.owner === currentUser._id;
         });
         const resultArray = searchMovies(userSavedMovies, name);
         setSavedMovies(resultArray);
-        setIsNotFound(!resultArray.length && !isFailed);
-        setTimeout(() => setIsLoading(false), 1000);
+        setNotFoundMovies(!resultArray.length && !isFailed);
+        setTimeout(() => setPreloader(false), 1000);
       })
       .catch((err) => console.log(err));
 
     const resultArray = searchMovies(allSavedMovies, name);
 
     setSavedMovies(resultArray);
-    setIsNotFound(!resultArray.length || !isFailed);
-    setTimeout(() => setIsLoading(false), 1000);
+    setNotFoundMovies(!resultArray.length || !isFailed);
+    setTimeout(() => setPreloader(false), 1000);
   };
 
   const handleDeleteMovie = (movie) => {
@@ -312,13 +317,13 @@ function App() {
         });
       })
       .catch((err) => {
-        setErrorMessage(
-          {
-            textError: err.status !== 400
-            ? "Пользователь с таким email уже зарегистрирован"
-            : "При обновлении профиля произошла ошибка.",
-            isError: true
-          });
+        setErrorMessage({
+          textError:
+            err.status !== 400
+              ? "Пользователь с таким email уже зарегистрирован"
+              : "При обновлении профиля произошла ошибка.",
+          isError: true,
+        });
         console.error(err);
       })
       .finally(() => {
@@ -332,16 +337,16 @@ function App() {
     setLoggedIn(false);
     setCurrentUser({});
     setErrorMessage({
-      textError: '',
+      textError: "",
       isError: null,
     });
-    setIsLoading(false);
+    setPreloader(false);
     setIsFailed(false);
     setMovies([]);
     setSavedMovies([]);
     setChecked(true);
-    setCheckedSaveMovies(true);
-    setIsNotFound(false);
+    setCheckedSavedMovies(true);
+    setNotFoundMovies(false);
   };
 
   return (
@@ -371,13 +376,13 @@ function App() {
                 displayedMovies={displayedMovies}
                 onSubmit={handleSearchMovies}
                 movies={movies}
-                isLoading={isLoading}
+                preloader={preloader}
                 isFailed={isFailed}
-                isNotFound={isNotFound}
+                notFoundMovies={notFoundMovies}
                 searchKey={localStorage.getItem("searchKey")}
                 onCheckbox={handleChangeCheckbox}
                 checked={checked}
-                checkedSaveMovies={checkedSaveMovies}
+                checkedSavedMovies={checkedSavedMovies}
                 savedMovies={savedMovies}
                 onSave={handleSaveMovie}
                 onDelete={handleDeleteMovie}
@@ -392,13 +397,13 @@ function App() {
               <SavedMovies
                 onSubmit={handleSearchSavedMovies}
                 movies={movies}
-                isLoading={isLoading}
+                preloader={preloader}
                 isFailed={isFailed}
-                isNotFound={isNotFound}
+                notFoundMovies={notFoundMovies}
                 searchKey={localStorage.getItem("searchKey")}
                 onCheckbox={handleChangeCheckbox}
                 checked={checked}
-                checkedSaveMovies={checkedSaveMovies}
+                checkedSavedMovies={checkedSavedMovies}
                 savedMovies={savedMovies}
                 onSave={handleSaveMovie}
                 onDelete={handleDeleteMovie}

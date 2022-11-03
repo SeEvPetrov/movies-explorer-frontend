@@ -9,13 +9,13 @@ import "./SavedMovies.css";
 function SavedMovies({
   movies,
   onSubmit,
-  isLoading,
+  preloader,
   isFailed,
-  isNotFound,
+  notFoundMovies,
   searchKey,
   onCheckbox,
   checked,
-  checkedSaveMovies,
+  checkedSavedMovies,
   savedMovies,
   onSave,
   onDelete,
@@ -36,17 +36,17 @@ function SavedMovies({
           searchKey={searchKey}
           onCheckbox={onCheckbox}
           checked={checked}
-          checkedSaveMovies={checkedSaveMovies}
+          checkedSaveMovies={checkedSavedMovies}
         />
-        {isLoading ? (
+        {preloader ? (
           <Preloader />
         ) : (
           <MoviesCardList
             displayedMovies={displayedMovies}
             checked={checked}
-            checkedSaveMovies={checkedSaveMovies}
+            checkedSaveMovies={checkedSavedMovies}
             movies={movies}
-            isNotFound={isNotFound}
+            notFoundMovies={notFoundMovies}
             isFailed={isFailed}
             savedMovies={savedMovies}
             onSave={onSave}

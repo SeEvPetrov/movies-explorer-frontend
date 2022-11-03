@@ -50,7 +50,12 @@ function SearchForm({
   return (
     <div className="search">
       <div className="search__container">
-        <form action="#" className="search__form" noValidate onSubmit={handleSubmit}>
+        <form
+          action="#"
+          className="search__form"
+          noValidate
+          onSubmit={handleSubmit}
+        >
           <input
             type="text"
             className="search__input"
@@ -58,13 +63,15 @@ function SearchForm({
             onChange={handleInputChange}
             placeholder="Фильм"
             required
-            minLength='1'
-            maxLength='33'
+            minLength="1"
+            maxLength="33"
           />
           <button type="submit" className="search__button">
             Поиск
           </button>
-          <span className="search__error">{!searchFormState.isFormValid && searchFormState.errorText}</span>
+          <span className="search__error">
+            {!searchFormState.isFormValid && searchFormState.errorText}
+          </span>
         </form>
         <Checkbox
           onCheckbox={onCheckbox}

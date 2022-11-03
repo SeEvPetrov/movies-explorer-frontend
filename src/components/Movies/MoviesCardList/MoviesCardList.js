@@ -7,13 +7,13 @@ function MoviesCardList({
   handleShowMoreMovies,
   displayedMovies,
   movies,
-  isNotFound,
+  notFoundMovies,
   isFailed,
   savedMovies,
   onSave,
   onDelete,
   checked,
-  checkedSaveMovies,
+  checkedSavedMovies,
   allSavedMovies,
 }) {
   const location = useLocation();
@@ -32,7 +32,7 @@ function MoviesCardList({
     return resultShortMoviesArray.filter((item) => item.duration <= 40);
   };
 
-  let saveMoviesArray = !checkedSaveMovies
+  let saveMoviesArray = !checkedSavedMovies
     ? searchShortMovies(savedMovies)
     : savedMovies;
 
