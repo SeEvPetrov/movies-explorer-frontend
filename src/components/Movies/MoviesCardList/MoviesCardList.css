@@ -3,6 +3,7 @@
   max-width: 1280px;
   padding: 0 70px 0;
   box-sizing: border-box;
+  text-align: center;
 }
 
 .movies-cards__list {
@@ -31,6 +32,11 @@
   color: #fff;
   border-style: none;
   transition: opacity 0.3s ease-in;
+}
+
+.movies-cards__response {
+  color:red;
+  font-size: 25px;
 }
 
 .movie-cards__button_hidden {

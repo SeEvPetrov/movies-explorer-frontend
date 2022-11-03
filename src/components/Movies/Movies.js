@@ -7,12 +7,11 @@ import Footer from "../Footer/Footer";
 import "./Movies.css";
 
 function Movies({
+  errorMessage,
   displayedMovies,
   onSubmit,
   movies,
   preloader,
-  isFailed,
-  notFoundMovies,
   searchKey,
   savedMovies,
   onSave,
@@ -43,10 +42,9 @@ function Movies({
           <Preloader />
         ) : (
           <MoviesCardList
+            errorMessage={errorMessage}
             displayedMovies={displayedMovies}
             movies={movies}
-            notFoundMovies={notFoundMovies}
-            isFailed={isFailed}
             searchKey={searchKey}
             savedMovies={savedMovies}
             onSave={onSave}

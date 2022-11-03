@@ -44,10 +44,8 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
   const [preloader, setPreloader] = useState(false);
-  const [isFailed, setIsFailed] = useState(false);
   const [checked, setChecked] = useState(true);
   const [checkedSavedMovies, setCheckedSavedMovies] = useState(true);
-  const [notFoundMovies, setNotFoundMovies] = useState(false);
   const [allSavedMovies, setAllSavedMovies] = useState([]);
 
   useEffect(() => {
@@ -77,7 +75,7 @@ function App() {
         );
       }
     }
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loggedIn]);
 
   const tokenCheck = () => {
@@ -117,7 +115,7 @@ function App() {
         });
       })
       .finally(() => {
-        resetErrorText();
+        setTimeout(() => resetErrorText(), 2000);
       });
   };
 
@@ -142,18 +140,17 @@ function App() {
             isError: true,
           });
         }
+      })
+      .finally(() => {
+        setTimeout(() => resetErrorText(), 2000);
       });
   };
 
   const resetErrorText = () => {
-    setTimeout(
-      () =>
-        setErrorMessage({
-          textError: "",
-          isError: null,
-        }),
-      10000
-    );
+    setErrorMessage({
+      textError: "",
+      isError: null,
+    });
   };
 
   useEffect(() => {
@@ -237,16 +234,30 @@ function App() {
             name
           );
           setMovies(resultArray);
-          setNotFoundMovies(!movies.length && !isFailed);
+          if (location.pathname === '/movies' && resultArray.length === 0) {
+            setErrorMessage({
+              textError: "Ничего не найдено",
+              isError: true,
+            });
+          } else if (location.pathname === '/movies' && resultArray.length > 0) {
+            resetErrorText();
+          }
           localStorage.setItem("filteredMovies", JSON.stringify(resultArray));
           localStorage.setItem("searchKey", name);
           localStorage.setItem("checkbox", checked);
           setTimeout(() => setPreloader(false), 1000);
         })
         .catch((err) => {
-          setIsFailed(true);
+          setErrorMessage({
+            textError:
+              "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз",
+            isError: true,
+          });
           console.log(err);
-        });
+        })
+        // .finally(() => {
+        //   setTimeout(() => resetErrorText(), 2000);
+        // });
     } else if (JSON.parse(localStorage.getItem("allMovies"))) {
       setPreloader(true);
       const resultArray = searchMovies(
@@ -254,7 +265,14 @@ function App() {
         name
       );
       setMovies(resultArray);
-      setNotFoundMovies(!movies.length || !isFailed);
+      if (location.pathname === '/movies' && resultArray.length === 0) {
+        setErrorMessage({
+          textError: "Ничего не найдено",
+          isError: true,
+        });
+      } else if (location.pathname === '/movies' && resultArray.length > 0) {
+        resetErrorText();
+      }
       localStorage.setItem("filteredMovies", JSON.stringify(resultArray));
       localStorage.setItem("searchKey", name);
       localStorage.setItem("checkbox", checked);
@@ -274,15 +292,38 @@ function App() {
         });
         const resultArray = searchMovies(userSavedMovies, name);
         setSavedMovies(resultArray);
-        setNotFoundMovies(!resultArray.length && !isFailed);
+        if (location.pathname === '/saved-movies' && resultArray.length === 0) {
+          setErrorMessage({
+            textError: "Ничего не найдено",
+            isError: true,
+          });
+        } else if (location.pathname === '/saved-movies' && resultArray.length > 0) {
+          resetErrorText();
+        }
         setTimeout(() => setPreloader(false), 1000);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setErrorMessage({
+          textError:
+            "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз",
+          isError: true,
+        });
+      })
+      // .finally(() => {
+      //    resetErrorText();
+      // });
 
     const resultArray = searchMovies(allSavedMovies, name);
 
     setSavedMovies(resultArray);
-    setNotFoundMovies(!resultArray.length || !isFailed);
+    if (location.pathname === '/saved-movies' && resultArray.length === 0) {
+      setErrorMessage({
+        textError: "Ничего не найдено",
+        isError: true,
+      });
+    } else if (location.pathname === '/saved-movies' && resultArray.length > 0) {
+      resetErrorText();
+    }
     setTimeout(() => setPreloader(false), 1000);
   };
 
@@ -324,9 +365,6 @@ function App() {
           isError: true,
         });
         console.error(err);
-      })
-      .finally(() => {
-        resetErrorText();
       });
   };
 
@@ -340,12 +378,10 @@ function App() {
       isError: null,
     });
     setPreloader(false);
-    setIsFailed(false);
     setMovies([]);
     setSavedMovies([]);
     setChecked(true);
     setCheckedSavedMovies(true);
-    setNotFoundMovies(false);
   };
 
   return (
@@ -371,11 +407,11 @@ function App() {
             path="/profile"
             element={
               <ProtectedRoute loggedIn={loggedIn}>
-              <Profile
-                onSignOut={handleSignOut}
-                onUpdateUser={handleUpdateUser}
-                errorMessage={errorMessage}
-              />
+                <Profile
+                  onSignOut={handleSignOut}
+                  onUpdateUser={handleUpdateUser}
+                  errorMessage={errorMessage}
+                />
               </ProtectedRoute>
             }
           ></Route>
@@ -384,23 +420,22 @@ function App() {
             path="/movies"
             element={
               <ProtectedRoute loggedIn={loggedIn}>
-              <Movies
-                displayedMovies={displayedMovies}
-                onSubmit={handleSearchMovies}
-                movies={movies}
-                preloader={preloader}
-                isFailed={isFailed}
-                notFoundMovies={notFoundMovies}
-                searchKey={localStorage.getItem("searchKey")}
-                onCheckbox={handleChangeCheckbox}
-                checked={checked}
-                checkedSavedMovies={checkedSavedMovies}
-                savedMovies={savedMovies}
-                onSave={handleSaveMovie}
-                onDelete={handleDeleteMovie}
-                allSavedMovies={allSavedMovies}
-                handleShowMoreMovies={handleShowMoreMovies}
-              />
+                <Movies
+                  errorMessage={errorMessage}
+                  displayedMovies={displayedMovies}
+                  onSubmit={handleSearchMovies}
+                  movies={movies}
+                  preloader={preloader}
+                  searchKey={localStorage.getItem("searchKey")}
+                  onCheckbox={handleChangeCheckbox}
+                  checked={checked}
+                  checkedSavedMovies={checkedSavedMovies}
+                  savedMovies={savedMovies}
+                  onSave={handleSaveMovie}
+                  onDelete={handleDeleteMovie}
+                  allSavedMovies={allSavedMovies}
+                  handleShowMoreMovies={handleShowMoreMovies}
+                />
               </ProtectedRoute>
             }
           ></Route>
@@ -408,21 +443,20 @@ function App() {
             path="/saved-movies"
             element={
               <ProtectedRoute loggedIn={loggedIn}>
-              <SavedMovies
-                onSubmit={handleSearchSavedMovies}
-                movies={movies}
-                preloader={preloader}
-                isFailed={isFailed}
-                notFoundMovies={notFoundMovies}
-                searchKey={localStorage.getItem("searchKey")}
-                onCheckbox={handleChangeCheckbox}
-                checked={checked}
-                checkedSavedMovies={checkedSavedMovies}
-                savedMovies={savedMovies}
-                onSave={handleSaveMovie}
-                onDelete={handleDeleteMovie}
-                allSavedMovies={allSavedMovies}
-              />
+                <SavedMovies
+                  errorMessage={errorMessage}
+                  onSubmit={handleSearchSavedMovies}
+                  movies={movies}
+                  preloader={preloader}
+                  searchKey={localStorage.getItem("searchKey")}
+                  onCheckbox={handleChangeCheckbox}
+                  checked={checked}
+                  checkedSavedMovies={checkedSavedMovies}
+                  savedMovies={savedMovies}
+                  onSave={handleSaveMovie}
+                  onDelete={handleDeleteMovie}
+                  allSavedMovies={allSavedMovies}
+                />
               </ProtectedRoute>
             }
           ></Route>
