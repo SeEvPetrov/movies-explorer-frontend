@@ -18,6 +18,7 @@ function MoviesCardList({
 }) {
   const location = useLocation();
   let moviesPage = location.pathname === "/movies";
+
   const [isMoreButton, setMoreButton] = useState(false);
 
   useEffect(() => {
@@ -27,22 +28,22 @@ function MoviesCardList({
   }, [movies.length, displayedMovies]);
 
   const searchShortMovies = (movies) => {
-    const resultShortMoviesArr = movies.slice(0);
-    return resultShortMoviesArr.filter((item) => item.duration <= 40);
+    const resultShortMoviesArray = movies.slice(0);
+    return resultShortMoviesArray.filter((item) => item.duration <= 40);
   };
 
-  let saveMoviesArr = !checkedSaveMovies
+  let saveMoviesArray = !checkedSaveMovies
     ? searchShortMovies(savedMovies)
     : savedMovies;
 
-  let moviesArr = !checked ? searchShortMovies(movies) : movies;
+  let moviesArray = !checked ? searchShortMovies(movies) : movies;
 
   return (
     <div className="movies-cards">
       {moviesPage ? (
         <>
           <ul className="movies-cards__list">
-            {moviesArr.slice(0, displayedMovies).map((card) => {
+            {moviesArray.slice(0, displayedMovies).map((card) => {
               return (
                 <MovieCard
                   key={card.id}
@@ -72,7 +73,7 @@ function MoviesCardList({
       ) : (
         <>
           <ul className="movies-cards__list">
-            {saveMoviesArr.map((card) => {
+            {saveMoviesArray.map((card) => {
               return (
                 <MovieCard
                   key={card._id}

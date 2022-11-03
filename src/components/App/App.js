@@ -45,8 +45,6 @@ function App() {
   const [checkedSaveMovies, setCheckedSaveMovies] = useState(true);
   const [isNotFound, setIsNotFound] = useState(false);
   const [allSavedMovies, setAllSavedMovies] = useState([]);
-  const [isShortSavedMovies, setIsShortSavedMovies] = useState([]);
-  const [isCollectionSavedArray, setIsCollectionSavedArray] = useState([]);
 
   useEffect(() => {
     tokenCheck();
@@ -192,25 +190,6 @@ function App() {
       });
   };
 
-  const handleDeleteMovie = (movie) => {
-    const savedMovie = savedMovies.find(
-      (item) => item.movieId === movie.movieId
-    );
-
-    mainApi
-      .deleteMovie(savedMovie._id)
-      .then(() => {
-        const newMoviesList = savedMovies.filter(
-          (item) => item._id !== savedMovie._id
-        );
-
-        setSavedMovies(newMoviesList);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   const handleChangeCheckbox = (evt) => {
     if (location.pathname === "/movies") {
       setChecked(!checked);
@@ -291,6 +270,25 @@ function App() {
     setSavedMovies(resultArray);
     setIsNotFound(!resultArray.length || !isFailed);
     setTimeout(() => setIsLoading(false), 1000);
+  };
+
+  const handleDeleteMovie = (movie) => {
+    const savedMovie = savedMovies.find(
+      (item) => item.movieId === movie.movieId
+    );
+
+    mainApi
+      .deleteMovie(savedMovie._id)
+      .then(() => {
+        const newMoviesList = savedMovies.filter(
+          (item) => item._id !== savedMovie._id
+        );
+
+        setSavedMovies(newMoviesList);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleUpdateUser = (name, email) => {
