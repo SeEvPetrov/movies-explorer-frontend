@@ -38,6 +38,8 @@ function App() {
     textError: "",
     isError: null,
   });
+  const [errorMessageMovies,  setErrorMessageMovies] = useState('');
+  const [errorMessageSavedMovies,  setErrorMessageSavedMovies] = useState('');
   const [moviesToLoad, setMoviesToLoad] = useState(0);
   const [displayedMovies, setDisplayedMovies] = useState(0);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -51,7 +53,9 @@ function App() {
   useEffect(() => {
     tokenCheck();
     if (loggedIn) {
-      mainApi
+      if (location.pathname === '/saved-movies') {
+        setErrorMessageSavedMovies('');
+        mainApi
         .getSavedMovies()
         .then((res) => {
           setSavedMovies(res);
@@ -59,6 +63,7 @@ function App() {
         .catch((err) => {
           console.log(err);
         });
+      }
       auth
         .getUserInfo()
         .then((data) => {
@@ -76,7 +81,7 @@ function App() {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loggedIn]);
+  }, [loggedIn, location.pathname]);
 
   const tokenCheck = () => {
     const jwt = localStorage.getItem("jwt");
@@ -212,9 +217,23 @@ function App() {
   };
 
   const searchMovies = (movies, name) => {
-    return movies.filter((item) =>
-      item.nameRU.toLowerCase().includes(name.toLowerCase())
-    );
+    const moviesArray = movies.filter((item) =>
+    item.nameRU.toLowerCase().includes(name.toLowerCase())
+  );
+    if (location.pathname === "/movies" && moviesArray.length === 0) {
+      setErrorMessageMovies("Ничего не найдено");
+    } else {
+      setErrorMessageMovies('');
+    }
+
+    if (location.pathname === "/saved-movies" && moviesArray.length === 0) {
+      setErrorMessageSavedMovies("Ничего не найдено");
+    } else {
+      setErrorMessageSavedMovies('');
+    }
+
+   
+    return moviesArray;
   };
 
   const handleSearchMovies = (name) => {
@@ -234,14 +253,6 @@ function App() {
             name
           );
           setMovies(resultArray);
-          if (location.pathname === '/movies' && resultArray.length === 0) {
-            setErrorMessage({
-              textError: "Ничего не найдено",
-              isError: true,
-            });
-          } else if (location.pathname === '/movies' && resultArray.length > 0) {
-            resetErrorText();
-          }
           localStorage.setItem("filteredMovies", JSON.stringify(resultArray));
           localStorage.setItem("searchKey", name);
           localStorage.setItem("checkbox", checked);
@@ -255,9 +266,9 @@ function App() {
           });
           console.log(err);
         })
-        // .finally(() => {
-        //   setTimeout(() => resetErrorText(), 2000);
-        // });
+        .finally(() => {
+          setTimeout(() => resetErrorText(), 2000);
+        });
     } else if (JSON.parse(localStorage.getItem("allMovies"))) {
       setPreloader(true);
       const resultArray = searchMovies(
@@ -265,14 +276,6 @@ function App() {
         name
       );
       setMovies(resultArray);
-      if (location.pathname === '/movies' && resultArray.length === 0) {
-        setErrorMessage({
-          textError: "Ничего не найдено",
-          isError: true,
-        });
-      } else if (location.pathname === '/movies' && resultArray.length > 0) {
-        resetErrorText();
-      }
       localStorage.setItem("filteredMovies", JSON.stringify(resultArray));
       localStorage.setItem("searchKey", name);
       localStorage.setItem("checkbox", checked);
@@ -285,6 +288,7 @@ function App() {
     mainApi
       .getSavedMovies()
       .then((movies) => {
+        localStorage.setItem("savedMovies", JSON.stringify(movies));
         setAllSavedMovies(movies);
         localStorage.setItem("checkboxSavedMovies", checkedSavedMovies);
         const userSavedMovies = movies.filter((movie) => {
@@ -292,14 +296,6 @@ function App() {
         });
         const resultArray = searchMovies(userSavedMovies, name);
         setSavedMovies(resultArray);
-        if (location.pathname === '/saved-movies' && resultArray.length === 0) {
-          setErrorMessage({
-            textError: "Ничего не найдено",
-            isError: true,
-          });
-        } else if (location.pathname === '/saved-movies' && resultArray.length > 0) {
-          resetErrorText();
-        }
         setTimeout(() => setPreloader(false), 1000);
       })
       .catch((err) => {
@@ -309,21 +305,10 @@ function App() {
           isError: true,
         });
       })
-      // .finally(() => {
-      //    resetErrorText();
-      // });
 
     const resultArray = searchMovies(allSavedMovies, name);
 
     setSavedMovies(resultArray);
-    if (location.pathname === '/saved-movies' && resultArray.length === 0) {
-      setErrorMessage({
-        textError: "Ничего не найдено",
-        isError: true,
-      });
-    } else if (location.pathname === '/saved-movies' && resultArray.length > 0) {
-      resetErrorText();
-    }
     setTimeout(() => setPreloader(false), 1000);
   };
 
@@ -370,6 +355,8 @@ function App() {
 
   const handleSignOut = () => {
     localStorage.clear();
+    setErrorMessageMovies('');
+    setErrorMessageSavedMovies('');
     navigate("/");
     setLoggedIn(false);
     setCurrentUser({});
@@ -421,7 +408,7 @@ function App() {
             element={
               <ProtectedRoute loggedIn={loggedIn}>
                 <Movies
-                  errorMessage={errorMessage}
+                  errorMessageMovies={errorMessageMovies}
                   displayedMovies={displayedMovies}
                   onSubmit={handleSearchMovies}
                   movies={movies}
@@ -444,7 +431,7 @@ function App() {
             element={
               <ProtectedRoute loggedIn={loggedIn}>
                 <SavedMovies
-                  errorMessage={errorMessage}
+                  errorMessageSavedMovies={errorMessageSavedMovies}
                   onSubmit={handleSearchSavedMovies}
                   movies={movies}
                   preloader={preloader}

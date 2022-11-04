@@ -4,7 +4,8 @@ import MovieCard from "../MoviesCard/MovieCard";
 import { useLocation } from "react-router-dom";
 
 function MoviesCardList({
-  errorMessage,
+  errorMessageMovies,
+  errorMessageSavedMovies,
   handleShowMoreMovies,
   displayedMovies,
   movies,
@@ -18,8 +19,10 @@ function MoviesCardList({
   const location = useLocation();
   let moviesPage = location.pathname === "/movies";
 
+  // console.log(allSavedMovies);
+
   const [isMoreButton, setMoreButton] = useState(false);
-  const { textError } = errorMessage;
+  // const { textError } = errorMessage;
 
   useEffect(() => {
     movies.length > displayedMovies
@@ -40,9 +43,10 @@ function MoviesCardList({
 
   return (
     <div className="movies-cards">
-      <span className="movies-cards__response">{textError}</span>
+      {/* <span className="movies-cards__response">{textError}</span> */}
       {moviesPage ? (
         <>
+        <span className="movies-cards__response">{errorMessageMovies}</span>
           <ul className="movies-cards__list">
             {moviesArray.slice(0, displayedMovies).map((card) => {
               return (
@@ -73,6 +77,7 @@ function MoviesCardList({
         </>
       ) : (
         <>
+        <span className="movies-cards__response">{errorMessageSavedMovies}</span>
           <ul className="movies-cards__list">
             {saveMoviesArray.map((card) => {
               return (

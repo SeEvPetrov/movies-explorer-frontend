@@ -7,7 +7,7 @@ import Footer from "../Footer/Footer";
 import "./SavedMovies.css";
 
 function SavedMovies({
-  errorMessage,
+  errorMessageSavedMovies,
   movies,
   onSubmit,
   preloader,
@@ -41,7 +41,7 @@ function SavedMovies({
           <Preloader />
         ) : (
           <MoviesCardList
-            errorMessage={errorMessage}
+            errorMessageSavedMovies={errorMessageSavedMovies}
             displayedMovies={displayedMovies}
             checked={checked}
             checkedSavedMovies={checkedSavedMovies}

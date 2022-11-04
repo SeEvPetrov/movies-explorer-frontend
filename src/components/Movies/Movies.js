@@ -7,7 +7,7 @@ import Footer from "../Footer/Footer";
 import "./Movies.css";
 
 function Movies({
-  errorMessage,
+  errorMessageMovies,
   displayedMovies,
   onSubmit,
   movies,
@@ -42,7 +42,7 @@ function Movies({
           <Preloader />
         ) : (
           <MoviesCardList
-            errorMessage={errorMessage}
+           errorMessageMovies={errorMessageMovies}
             displayedMovies={displayedMovies}
             movies={movies}
             searchKey={searchKey}
