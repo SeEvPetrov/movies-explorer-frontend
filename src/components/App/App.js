@@ -38,8 +38,8 @@ function App() {
     textError: "",
     isError: null,
   });
-  const [errorMessageMovies,  setErrorMessageMovies] = useState('');
-  const [errorMessageSavedMovies,  setErrorMessageSavedMovies] = useState('');
+  const [errorMessageMovies, setErrorMessageMovies] = useState("");
+  const [errorMessageSavedMovies, setErrorMessageSavedMovies] = useState("");
   const [moviesToLoad, setMoviesToLoad] = useState(0);
   const [displayedMovies, setDisplayedMovies] = useState(0);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -53,9 +53,7 @@ function App() {
   useEffect(() => {
     tokenCheck();
     if (loggedIn) {
-      if (location.pathname === '/saved-movies') {
-        setErrorMessageSavedMovies('');
-        mainApi
+      mainApi
         .getSavedMovies()
         .then((res) => {
           setSavedMovies(res);
@@ -63,7 +61,6 @@ function App() {
         .catch((err) => {
           console.log(err);
         });
-      }
       auth
         .getUserInfo()
         .then((data) => {
@@ -81,7 +78,7 @@ function App() {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loggedIn, location.pathname]);
+  }, [loggedIn]);
 
   const tokenCheck = () => {
     const jwt = localStorage.getItem("jwt");
@@ -120,7 +117,7 @@ function App() {
         });
       })
       .finally(() => {
-        setTimeout(() => resetErrorText(), 2000);
+        resetErrorText();
       });
   };
 
@@ -147,15 +144,17 @@ function App() {
         }
       })
       .finally(() => {
-        setTimeout(() => resetErrorText(), 2000);
+        resetErrorText();
       });
   };
 
   const resetErrorText = () => {
-    setErrorMessage({
-      textError: "",
-      isError: null,
-    });
+    setTimeout(() => {
+      setErrorMessage({
+        textError: "",
+        isError: null,
+      });
+    }, 2000);
   };
 
   useEffect(() => {
@@ -195,17 +194,6 @@ function App() {
     setDisplayedMovies(displayedMovies + moviesToLoad);
   };
 
-  const handleSaveMovie = (movie) => {
-    mainApi
-      .createMovie(movie)
-      .then((data) => {
-        setSavedMovies([data, ...savedMovies]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   const handleChangeCheckbox = (evt) => {
     if (location.pathname === "/movies") {
       setChecked(!checked);
@@ -218,21 +206,20 @@ function App() {
 
   const searchMovies = (movies, name) => {
     const moviesArray = movies.filter((item) =>
-    item.nameRU.toLowerCase().includes(name.toLowerCase())
-  );
+      item.nameRU.toLowerCase().includes(name.toLowerCase())
+    );
     if (location.pathname === "/movies" && moviesArray.length === 0) {
       setErrorMessageMovies("Ничего не найдено");
     } else {
-      setErrorMessageMovies('');
+      setErrorMessageMovies("");
     }
 
     if (location.pathname === "/saved-movies" && moviesArray.length === 0) {
       setErrorMessageSavedMovies("Ничего не найдено");
     } else {
-      setErrorMessageSavedMovies('');
+      setErrorMessageSavedMovies("");
     }
 
-   
     return moviesArray;
   };
 
@@ -259,15 +246,13 @@ function App() {
           setTimeout(() => setPreloader(false), 1000);
         })
         .catch((err) => {
-          setErrorMessage({
-            textError:
-              "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз",
-            isError: true,
-          });
-          console.log(err);
+          setErrorMessageMovies(
+            "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
+          );
+          console.error(err);
         })
         .finally(() => {
-          setTimeout(() => resetErrorText(), 2000);
+          setTimeout(() => setErrorMessageMovies(""), 2000);
         });
     } else if (JSON.parse(localStorage.getItem("allMovies"))) {
       setPreloader(true);
@@ -276,9 +261,9 @@ function App() {
         name
       );
       setMovies(resultArray);
+      localStorage.setItem("checkbox", checked);
       localStorage.setItem("filteredMovies", JSON.stringify(resultArray));
       localStorage.setItem("searchKey", name);
-      localStorage.setItem("checkbox", checked);
       setTimeout(() => setPreloader(false), 1000);
     }
   };
@@ -288,7 +273,6 @@ function App() {
     mainApi
       .getSavedMovies()
       .then((movies) => {
-        localStorage.setItem("savedMovies", JSON.stringify(movies));
         setAllSavedMovies(movies);
         localStorage.setItem("checkboxSavedMovies", checkedSavedMovies);
         const userSavedMovies = movies.filter((movie) => {
@@ -296,20 +280,30 @@ function App() {
         });
         const resultArray = searchMovies(userSavedMovies, name);
         setSavedMovies(resultArray);
+
         setTimeout(() => setPreloader(false), 1000);
       })
       .catch((err) => {
-        setErrorMessage({
-          textError:
-            "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз",
-          isError: true,
-        });
-      })
+        setErrorMessageSavedMovies(
+          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
+        );
+        console.error(err);
+      });
 
     const resultArray = searchMovies(allSavedMovies, name);
-
     setSavedMovies(resultArray);
     setTimeout(() => setPreloader(false), 1000);
+  };
+
+  const handleSaveMovie = (movie) => {
+    mainApi
+      .createMovie(movie)
+      .then((data) => {
+        setSavedMovies([data, ...savedMovies]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleDeleteMovie = (movie) => {
@@ -323,7 +317,6 @@ function App() {
         const newSavedMovies = savedMovies.filter(
           (item) => item._id !== savedMovie._id
         );
-
         setSavedMovies(newSavedMovies);
       })
       .catch((err) => {
@@ -350,13 +343,16 @@ function App() {
           isError: true,
         });
         console.error(err);
+      })
+      .finally(() => {
+        resetErrorText();
       });
   };
 
   const handleSignOut = () => {
     localStorage.clear();
-    setErrorMessageMovies('');
-    setErrorMessageSavedMovies('');
+    setErrorMessageMovies("");
+    setErrorMessageSavedMovies("");
     navigate("/");
     setLoggedIn(false);
     setCurrentUser({});

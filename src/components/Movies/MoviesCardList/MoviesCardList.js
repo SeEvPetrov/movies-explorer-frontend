@@ -19,10 +19,7 @@ function MoviesCardList({
   const location = useLocation();
   let moviesPage = location.pathname === "/movies";
 
-  // console.log(allSavedMovies);
-
   const [isMoreButton, setMoreButton] = useState(false);
-  // const { textError } = errorMessage;
 
   useEffect(() => {
     movies.length > displayedMovies
@@ -43,7 +40,6 @@ function MoviesCardList({
 
   return (
     <div className="movies-cards">
-      {/* <span className="movies-cards__response">{textError}</span> */}
       {moviesPage ? (
         <>
         <span className="movies-cards__response">{errorMessageMovies}</span>

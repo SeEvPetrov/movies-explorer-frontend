@@ -88,6 +88,10 @@
   opacity: 0.8;
 }
 
+.active {
+  color: #6d6e6e;
+}
+
 .navigate__button-open {
   display: none;
   border: none;
