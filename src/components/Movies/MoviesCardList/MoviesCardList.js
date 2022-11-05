@@ -19,8 +19,8 @@ function MoviesCardList({
   let moviesPage = location.pathname === "/movies";
 
   const searchShortMovies = (movies) => {
-    const resultShortMoviesArray = movies.slice(0);
-    return resultShortMoviesArray.filter((item) => item.duration <= 40);
+    const resultShortMoviesArray = movies.filter((item) => item.duration <= 40);
+    return resultShortMoviesArray;
   };
 
   let saveMoviesArray = !checkedSavedMovies
