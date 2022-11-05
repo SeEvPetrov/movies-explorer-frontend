@@ -71,16 +71,29 @@ function App() {
         .catch((err) => {
           console.error(`Данные пользователя не получены: ${err}`);
         });
-      if (JSON.parse(localStorage.getItem("filteredMovies"))) {
-        setMovies(JSON.parse(localStorage.getItem("filteredMovies")));
-        setChecked(JSON.parse(localStorage.getItem("checkbox")));
-        setCheckedSavedMovies(
-          JSON.parse(localStorage.getItem("checkboxSavedMovies"))
-        );
-      }
+      // if (JSON.parse(localStorage.getItem("filteredMovies"))) {
+      //   setMovies(JSON.parse(localStorage.getItem("filteredMovies")));
+      //   setChecked(JSON.parse(localStorage.getItem("checkbox")));
+      //   setCheckedSavedMovies(
+      //     JSON.parse(localStorage.getItem("checkboxSavedMovies"))
+      //   );
+      // }
+      
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loggedIn]);
+
+  useEffect(() => {
+    tokenCheck();
+    if (JSON.parse(localStorage.getItem("filteredMovies"))) {
+      setMovies(JSON.parse(localStorage.getItem("filteredMovies")));
+      setChecked(JSON.parse(localStorage.getItem("checkbox")));
+      setCheckedSavedMovies(
+        JSON.parse(localStorage.getItem("checkboxSavedMovies"))
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (location.pathname === "/saved-movies") {
