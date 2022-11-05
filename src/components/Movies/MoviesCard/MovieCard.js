@@ -16,11 +16,10 @@ function MovieCard({
   let hours = Math.floor(duration / 60);
   let minutes = Math.floor(duration - hours * 60);
   const isSaved = savedMovies.some((m) => m.movieId === movie.id);
-  const isAllSaved = allSavedMovies.some((m) => m.movieId === movie.id);
 
   let buttonClass =
-    isSaved || isAllSaved
-      ? "movie-card__btn movie-card__btn_type_saved movie-card__saved_type_active"
+    isSaved ?
+       "movie-card__btn movie-card__btn_type_saved movie-card__saved_type_active"
       : "movie-card__btn movie-card__btn_type_saved";
 
   const handleSaveClick = () => {

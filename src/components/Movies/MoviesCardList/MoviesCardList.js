@@ -4,6 +4,7 @@ import MovieCard from "../MoviesCard/MovieCard";
 import { useLocation } from "react-router-dom";
 
 function MoviesCardList({
+  showSavedMovies,
   errorMessageMovies,
   errorMessageSavedMovies,
   handleShowMoreMovies,
@@ -33,8 +34,8 @@ function MoviesCardList({
   };
 
   let saveMoviesArray = !checkedSavedMovies
-    ? searchShortMovies(savedMovies)
-    : savedMovies;
+    ? searchShortMovies(showSavedMovies)
+    : showSavedMovies;
 
   let moviesArray = !checked ? searchShortMovies(movies) : movies;
 

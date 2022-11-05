@@ -49,6 +49,7 @@ function App() {
   const [checked, setChecked] = useState(true);
   const [checkedSavedMovies, setCheckedSavedMovies] = useState(true);
   const [allSavedMovies, setAllSavedMovies] = useState([]);
+  const [showSavedMovies, setShowSavedMovies] = useState([]);
 
   useEffect(() => {
     tokenCheck();
@@ -56,7 +57,9 @@ function App() {
       mainApi
         .getSavedMovies()
         .then((res) => {
+          localStorage.setItem("savedMovies", JSON.stringify(res));
           setSavedMovies(res);
+          setShowSavedMovies(res);
         })
         .catch((err) => {
           console.log(err);
@@ -79,6 +82,13 @@ function App() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loggedIn]);
+
+  useEffect(() => {
+    if (location.pathname === "/saved-movies") {
+      setErrorMessageSavedMovies("");
+      setShowSavedMovies(() => JSON.parse(localStorage.getItem("savedMovies")));
+    }
+  }, [location.pathname]);
 
   const tokenCheck = () => {
     const jwt = localStorage.getItem("jwt");
@@ -269,55 +279,54 @@ function App() {
   };
 
   const handleSearchSavedMovies = (name) => {
-    setPreloader(true);
-    mainApi
-      .getSavedMovies()
-      .then((movies) => {
-        setAllSavedMovies(movies);
-        localStorage.setItem("checkboxSavedMovies", checkedSavedMovies);
-        const userSavedMovies = movies.filter((movie) => {
-          return movie.owner === currentUser._id;
-        });
-        const resultArray = searchMovies(userSavedMovies, name);
-        setSavedMovies(resultArray);
-
-        setTimeout(() => setPreloader(false), 1000);
-      })
-      .catch((err) => {
-        setErrorMessageSavedMovies(
-          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
-        );
-        console.error(err);
-      });
-
-    const resultArray = searchMovies(allSavedMovies, name);
-    setSavedMovies(resultArray);
-    setTimeout(() => setPreloader(false), 1000);
+    // setPreloader(true);
+    const resultArray = searchMovies(savedMovies, name);
+    setShowSavedMovies(resultArray);
+    localStorage.setItem("checkboxSavedMovies", checkedSavedMovies);
   };
 
   const handleSaveMovie = (movie) => {
-    mainApi
-      .createMovie(movie)
-      .then((data) => {
-        setSavedMovies([data, ...savedMovies]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const isSaved = savedMovies.some(
+      (savedMovie) => savedMovie.movieId === movie.movieId
+    );
+    if (isSaved) {
+      handleDeleteMovie(movie.movieId);
+    } else {
+      mainApi
+        .createMovie(movie)
+        .then((data) => {
+          localStorage.setItem(
+            "savedMovies",
+            JSON.stringify([...savedMovies, data])
+          );
+          // setSavedMovies([data, ...savedMovies]);
+          setSavedMovies((movies) => [...movies, data]);
+          setShowSavedMovies((cards) => [...cards, data]);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   const handleDeleteMovie = (movie) => {
-    const savedMovie = savedMovies.find(
-      (item) => item.movieId === movie.movieId
-    );
-
+    // const savedMovie = savedMovies.find(
+    //   (item) => item.movieId === movie.movieId
+    // );
     mainApi
-      .deleteMovie(savedMovie._id)
+      .deleteMovie(movie._id)
       .then(() => {
+        // const newSavedMovies = savedMovies.filter(
+        //   (item) => item._id !== savedMovie._id
+        // );
         const newSavedMovies = savedMovies.filter(
-          (item) => item._id !== savedMovie._id
+          (item) => item.movieId !== movie.movieId
         );
         setSavedMovies(newSavedMovies);
+        localStorage.setItem("savedMovies", JSON.stringify(newSavedMovies));
+        setShowSavedMovies((cards) =>
+          cards.filter((card) => card.movieId !== movie.movieId)
+        );
       })
       .catch((err) => {
         console.log(err);
@@ -436,6 +445,7 @@ function App() {
                   checked={checked}
                   checkedSavedMovies={checkedSavedMovies}
                   savedMovies={savedMovies}
+                  showSavedMovies={showSavedMovies}
                   onSave={handleSaveMovie}
                   onDelete={handleDeleteMovie}
                   allSavedMovies={allSavedMovies}

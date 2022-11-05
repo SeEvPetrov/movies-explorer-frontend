@@ -7,6 +7,7 @@ import Footer from "../Footer/Footer";
 import "./SavedMovies.css";
 
 function SavedMovies({
+  showSavedMovies,
   errorMessageSavedMovies,
   movies,
   onSubmit,
@@ -46,6 +47,7 @@ function SavedMovies({
             checked={checked}
             checkedSavedMovies={checkedSavedMovies}
             movies={movies}
+            showSavedMovies={showSavedMovies}
             savedMovies={savedMovies}
             onSave={onSave}
             onDelete={onDelete}
