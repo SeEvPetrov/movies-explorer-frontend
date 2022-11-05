@@ -19,6 +19,9 @@ function MoviesCardList({
   let moviesPage = location.pathname === "/movies";
 
   const searchShortMovies = (movies) => {
+    if (typeof movies === 'undefined') {
+      return
+    } 
     const resultShortMoviesArray = movies.filter((item) => item.duration <= 40);
     return resultShortMoviesArray;
   };
