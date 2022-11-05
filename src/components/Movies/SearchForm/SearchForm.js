@@ -21,6 +21,7 @@ function SearchForm({
     if (searchKey && location.pathname === "/movies") {
       setSearchFormState({ keyWord: searchKey });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleInputChange = (evt) => {

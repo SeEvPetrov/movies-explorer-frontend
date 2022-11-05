@@ -19,7 +19,6 @@ function Movies({
   onCheckbox,
   checked,
   checkedSavedMovies,
-  allSavedMovies,
   handleShowMoreMovies,
 }) {
   return (
@@ -51,7 +50,6 @@ function Movies({
             onDelete={onDelete}
             checked={checked}
             checkedSavedMovies={checkedSavedMovies}
-            allSavedMovies={allSavedMovies}
             handleShowMoreMovies={handleShowMoreMovies}
           />
         )}

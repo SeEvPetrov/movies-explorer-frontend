@@ -48,8 +48,7 @@ function App() {
   const [preloader, setPreloader] = useState(false);
   const [checked, setChecked] = useState(true);
   const [checkedSavedMovies, setCheckedSavedMovies] = useState(true);
-  const [allSavedMovies, setAllSavedMovies] = useState([]);
-  const [showSavedMovies, setShowSavedMovies] = useState([]);
+  const [displayedSavedMovies, setDisplayedSavedMovies] = useState([]);
 
   useEffect(() => {
     tokenCheck();
@@ -59,7 +58,7 @@ function App() {
         .then((res) => {
           localStorage.setItem("savedMovies", JSON.stringify(res));
           setSavedMovies(res);
-          setShowSavedMovies(res);
+          setDisplayedSavedMovies(res);
         })
         .catch((err) => {
           console.log(err);
@@ -86,7 +85,7 @@ function App() {
   useEffect(() => {
     if (location.pathname === "/saved-movies") {
       setErrorMessageSavedMovies("");
-      setShowSavedMovies(() => JSON.parse(localStorage.getItem("savedMovies")));
+      setDisplayedSavedMovies(() => JSON.parse(localStorage.getItem("savedMovies")));
     }
   }, [location.pathname]);
 
@@ -279,9 +278,8 @@ function App() {
   };
 
   const handleSearchSavedMovies = (name) => {
-    // setPreloader(true);
     const resultArray = searchMovies(savedMovies, name);
-    setShowSavedMovies(resultArray);
+    setDisplayedSavedMovies(resultArray);
     localStorage.setItem("checkboxSavedMovies", checkedSavedMovies);
   };
 
@@ -301,7 +299,7 @@ function App() {
           );
           // setSavedMovies([data, ...savedMovies]);
           setSavedMovies((movies) => [...movies, data]);
-          setShowSavedMovies((cards) => [...cards, data]);
+          setDisplayedSavedMovies((cards) => [...cards, data]);
         })
         .catch((err) => {
           console.log(err);
@@ -310,21 +308,15 @@ function App() {
   };
 
   const handleDeleteMovie = (movie) => {
-    // const savedMovie = savedMovies.find(
-    //   (item) => item.movieId === movie.movieId
-    // );
     mainApi
       .deleteMovie(movie._id)
       .then(() => {
-        // const newSavedMovies = savedMovies.filter(
-        //   (item) => item._id !== savedMovie._id
-        // );
         const newSavedMovies = savedMovies.filter(
           (item) => item.movieId !== movie.movieId
         );
         setSavedMovies(newSavedMovies);
         localStorage.setItem("savedMovies", JSON.stringify(newSavedMovies));
-        setShowSavedMovies((cards) =>
+        setDisplayedSavedMovies((cards) =>
           cards.filter((card) => card.movieId !== movie.movieId)
         );
       })
@@ -372,6 +364,7 @@ function App() {
     setPreloader(false);
     setMovies([]);
     setSavedMovies([]);
+    setDisplayedSavedMovies([]);
     setChecked(true);
     setCheckedSavedMovies(true);
   };
@@ -425,7 +418,6 @@ function App() {
                   savedMovies={savedMovies}
                   onSave={handleSaveMovie}
                   onDelete={handleDeleteMovie}
-                  allSavedMovies={allSavedMovies}
                   handleShowMoreMovies={handleShowMoreMovies}
                 />
               </ProtectedRoute>
@@ -445,10 +437,9 @@ function App() {
                   checked={checked}
                   checkedSavedMovies={checkedSavedMovies}
                   savedMovies={savedMovies}
-                  showSavedMovies={showSavedMovies}
+                  displayedSavedMovies={displayedSavedMovies}
                   onSave={handleSaveMovie}
                   onDelete={handleDeleteMovie}
-                  allSavedMovies={allSavedMovies}
                 />
               </ProtectedRoute>
             }

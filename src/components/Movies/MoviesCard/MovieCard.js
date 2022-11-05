@@ -10,7 +10,6 @@ function MovieCard({
   onSave,
   onDelete,
   movie,
-  allSavedMovies,
 }) {
   const location = useLocation();
   let hours = Math.floor(duration / 60);

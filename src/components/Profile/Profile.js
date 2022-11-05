@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Header from "../Header/Header";
 import MainMovies from "../Header/MoviesHeader/MoviesHeader";
 import { useState, useContext } from "react";
@@ -9,6 +10,7 @@ import "../User/Auth/Auth.css";
 function Profile({ onSignOut, onUpdateUser, errorMessage }) {
   const currentUser = useContext(CurrentUserContext);
   const [isUnlockedInput, setIsUnlockedInput] = useState(true);
+  const [disableSavedBtn, setDisableSavedBtn] = useState(true);
   const checkInput = useFormWithValidation();
   const { name, email } = checkInput.errors;
   const { textError, isError } = errorMessage;
@@ -18,11 +20,14 @@ function Profile({ onSignOut, onUpdateUser, errorMessage }) {
     setIsUnlockedInput((state) => !state);
   };
 
-  let disableSavedBtn =
-    (currentUser.name === checkInput?.values?.name &&
-      typeof checkInput?.values?.email === "undefined") ||
-    (currentUser.email === checkInput?.values?.email &&
-      typeof checkInput?.values?.email === "undefined");
+useEffect(() => {
+  if (currentUser.name === checkInput?.values?.name ||
+    currentUser.email === checkInput?.values?.email ) {
+      setDisableSavedBtn(true);
+    } else {
+      setDisableSavedBtn(false);
+    }
+   }, [checkInput?.values?.name, checkInput?.values?.email, currentUser]);  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -61,7 +66,7 @@ function Profile({ onSignOut, onUpdateUser, errorMessage }) {
                 name="name"
                 pattern="[A-Za-zА-Яа-яЁё\s-]+"
                 onChange={checkInput.handleChange}
-                value={checkInput?.values?.name ?? currentUser.name}
+                value={checkInput?.values?.name ?? ''}
                 {...(!isUnlockedInput ? {} : { disabled: true })}
                 required
               />
@@ -84,7 +89,7 @@ function Profile({ onSignOut, onUpdateUser, errorMessage }) {
                 name="email"
                 pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
                 onChange={checkInput.handleChange}
-                value={checkInput?.values?.email ?? currentUser.email}
+                value={checkInput?.values?.email ?? ''}
                 {...(!isUnlockedInput ? {} : { disabled: true })}
                 required
               />

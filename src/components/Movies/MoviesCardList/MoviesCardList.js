@@ -1,10 +1,9 @@
 import "./MoviesCardList.css";
-import { useState, useEffect } from "react";
 import MovieCard from "../MoviesCard/MovieCard";
 import { useLocation } from "react-router-dom";
 
 function MoviesCardList({
-  showSavedMovies,
+  displayedSavedMovies,
   errorMessageMovies,
   errorMessageSavedMovies,
   handleShowMoreMovies,
@@ -15,18 +14,9 @@ function MoviesCardList({
   onDelete,
   checked,
   checkedSavedMovies,
-  allSavedMovies,
 }) {
   const location = useLocation();
   let moviesPage = location.pathname === "/movies";
-
-  const [isMoreButton, setMoreButton] = useState(false);
-
-  useEffect(() => {
-    movies.length > displayedMovies
-      ? setMoreButton(true)
-      : setMoreButton(false);
-  }, [movies.length, displayedMovies]);
 
   const searchShortMovies = (movies) => {
     const resultShortMoviesArray = movies.slice(0);
@@ -34,10 +24,17 @@ function MoviesCardList({
   };
 
   let saveMoviesArray = !checkedSavedMovies
-    ? searchShortMovies(showSavedMovies)
-    : showSavedMovies;
+    ? searchShortMovies(displayedSavedMovies)
+    : displayedSavedMovies;
 
   let moviesArray = !checked ? searchShortMovies(movies) : movies;
+
+  let buttonClass =
+    !(movies.length > 4) ||
+    displayedMovies >= movies.length ||
+    displayedMovies >= moviesArray.length
+      ? 'movie-cards__button movie-cards__button_hidden'
+      : 'movie-cards__button';
 
   return (
     <div className="movies-cards">
@@ -57,16 +54,13 @@ function MoviesCardList({
                   onSave={onSave}
                   onDelete={onDelete}
                   movie={card}
-                  allSavedMovies={allSavedMovies}
                 />
               );
             })}
           </ul>
           <button
             type="button"
-            className={`movie-cards__button ${
-              !isMoreButton && "movie-cards__button_hidden"
-            }`}
+            className={buttonClass}
             onClick={handleShowMoreMovies}
           >
             Ещё
@@ -88,7 +82,6 @@ function MoviesCardList({
                   onSave={onSave}
                   onDelete={onDelete}
                   movie={card}
-                  allSavedMovies={allSavedMovies}
                 />
               );
             })}
