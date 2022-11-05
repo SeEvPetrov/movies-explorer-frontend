@@ -3,6 +3,7 @@
 ## Описание:
 
 Репозиторий для приложения проекта `Movies`.
+| **Pull request** | [Movies](https://github.com/SeEvPetrov/movies-explorer-frontend/pull/2) |
 
 | **Ссылка на макет** | [Макет](https://disk.yandex.ru/d/_Acs5BdtClUsqg) |
 | ----------------- | -------------------------------------------------------------------- |
