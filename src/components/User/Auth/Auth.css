@@ -69,7 +69,7 @@
 
 .error__input {
   position: absolute;
-  bottom: -35px;
+  bottom: -38px;
   display: block;
   font-weight: 400;
   font-size: 10px;
@@ -85,8 +85,29 @@
   visibility: visible;
 }
 
+.error__res {
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #ee3465;
+}
+.auth__btn-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.auth__btn-container_register {
+  margin-top: 69px;
+}
+
+.auth__btn-container_login {
+  margin-top: 179px;
+}
+
 .auth__submit-btn {
   width: 100%;
+  margin-top: 5px;
   font-weight: 500;
   font-size: 14px;
   line-height: 17px;
@@ -100,12 +121,10 @@
   cursor: pointer;
 }
 
-.auth__submit-btn_register {
-  margin-top: 69px;
-}
-
-.auth__submit-btn_login {
-  margin-top: 179px;
+.auth__submit-btn:disabled {
+  color: #c2c2c2;
+  background: #f8f8f8;
+  pointer-events: none;
 }
 
 .auth__submit-btn:hover {
@@ -162,10 +181,10 @@
     line-height: 15px;
     margin-bottom: 14px;
   }
-  .auth__submit-btn_register {
+  .auth__btn-container_register {
     margin-top: 157px;
   }
-  .auth__submit-btn_login {
+  .auth__btn-container_login {
     margin-top: 267px;
   }
   .auth__question {

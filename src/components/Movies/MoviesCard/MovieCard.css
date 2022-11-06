@@ -24,9 +24,13 @@
   font-size: 13px;
   line-height: 16px;
   margin: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .movie-card__btn {
+  margin-left: 5px;
   width: 16px;
   height: 16px;
   transition: 1s;
